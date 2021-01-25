@@ -31,6 +31,8 @@
       <!-- Custom styles for this template -->
       <link href="css/navbar-top-fixed.css" rel="stylesheet">
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons"    rel="stylesheet">
+      <script src="https://kit.fontawesome.com/4962701fb8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
    </head>
 
    <body>
@@ -90,9 +92,9 @@
               
                <form class="d-flex" action="#" method="post">     
                            
-                            <input class="form-control me-2" type="search" placeholder="Where Are you going?" aria-label="Search">
-                            <input class="form-control me-2" type="datetime-local" placeholder="Input your date" aria-label="Search">
-                           <button class="btn btn-primary" type="submit">Search</button>    
+                            <input class="form-control me-2" type="search" placeholder="Where Are you going?" aria-label="Search" >
+                            <input class="form-control me-2" type="datetime-local" placeholder="Input your date" aria-label="Search">   
+                           <button class="btn btn-primary" type="submit"> Search</button>    
                            
                   </form>
                
