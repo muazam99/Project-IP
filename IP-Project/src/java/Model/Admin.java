@@ -10,6 +10,8 @@ package Model;
  * @author Muaz Amir
  */
 public class Admin {
+    
+    private String ID;    
     private String name;
     private String email;
     private String role;
