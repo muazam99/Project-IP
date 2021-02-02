@@ -81,50 +81,7 @@
 
    <body>
 
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
-
-         <div class="container">
-             <span class="material-icons">
-                hotel
-                </span>
-             
-             <a class="navbar-brand" href="#"><b>Faiq Hotel</b></a>
-           
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-
-
-               <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
-                    <a class="nav-link" href="javascript:;">Home</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="javascript:;">About us</a>
-                  </li>
-               
-               </ul>
-
-               <ul class="navbar-nav">
-                   
-                  <li class="nav-item">
-                    <a href="#" class="btn btn-light" role="button" data-bs-toggle="button">Register</a>
-                  </li>      
-                  
-                  <li class="nav-item">
-                    <a href="#" class="btn btn-dark" role="button" data-bs-toggle="button">Login</a>
-                  </li>
-                                  
-               </ul>
-            </div>
-         </div>   
-      </nav>     
-
-    
-
-       
+       <jsp:include page="headerNav.jsp" />
 
          <!-- Main jumbotron for a primary marketing message or call to action -->
          <div class="jumbotron">
@@ -154,23 +111,21 @@
              <div class="col-md-3">
                  <div class="text-center">              
                      <div class="card shadow">
-                          <div class="text-center">
-                         <div class="card-body">     
-                            <form class="d-flex" action="#" method="post">      
-                               
+                         <div class="text-center">
+                            <div class="card-body">     
+                                 <form class="d-flex" action="#" method="post">      
                                      <div class="mb-6">
                                         <label for="exampleInputEmail1" class="form-label">Travel Date</label>
                                            <input type="date" class="form-control" id="date" name="traveldate">
                                            <br>
                                            <button type="submit" class="btn btn-primary">Search For Rooms</button>                  
                                       </div>
-                                
-                            </form>    
-                            </div>      
-                     </div>  
-                 </div>  
-               </div>
-             </div>
+                              </form>    
+                         </div>      
+                       </div>  
+                    </div>  
+                  </div>
+                </div>
              <div class="col-md-4">
                  
              </div>
