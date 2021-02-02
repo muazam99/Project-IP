@@ -110,39 +110,40 @@
                      <div class="card shadow">
                          <div class="text-center">
                             <div class="card-body">     
-                                <form class="d-flex" action="#" method="post">      
-                                    <div class="mb-6">
-                                        <table>
-                                            <tr>
-                                                <th>
-                                                    <label for="exampleInputEmail1" class="form-label">Check in</label>
-                                                </th>
-                                                <th>
-                                                    <label for="exampleInputEmail1" class="form-label">Check out</label>
-                                                </th>
-                                                <th colspan="2">
-                                                    <label for="exampleInputEmail1" class="form-label">Guest</label>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <input type="date" class="form-control" id="date_in" name="traveldate">
-                                                </td>
-                                                <td>
-                                                    <input type="date" class="form-control" id="date_out" name="traveldate">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control" id="guest_adult" name="guest" min="1" max="5" value="2">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control" id="guest_child" name="guest" min="0" max="5" value="0">
-                                                </td>
-                                                <td>
-                                                    <button type="submit" class="btn btn-primary">Search For Rooms</button> 
-                                                </td>
-                                            </tr>
-                                         </table>        
-                                      </div>
+                                <form class="d-flex" action="#" method="post">  
+                                    
+                                            <div class="offset-md-2">
+                                            <table>
+                                                    <tr>
+                                                        <th>
+                                                            <label for="exampleInputEmail1" class="form-label">Check in</label>
+                                                        </th>
+                                                        <th>
+                                                            <label for="exampleInputEmail1" class="form-label">Check out</label>
+                                                        </th>
+                                                        <th colspan="2">
+                                                            <label for="exampleInputEmail1" class="form-label">Guest</label>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="date" class="form-control" id="date_in" name="traveldate">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" class="form-control" id="date_out" name="traveldate">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" class="form-control" id="guest_adult" name="guest" min="1" max="5" value="2">
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" class="form-control" id="guest_child" name="guest" min="0" max="5" value="0">
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-primary">Search For Rooms</button> 
+                                                        </td>
+                                                    </tr>
+                                                 </table> 
+                                              </div>                                  
                               </form>    
                          </div>      
                        </div>  
