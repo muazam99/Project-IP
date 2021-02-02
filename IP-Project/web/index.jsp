@@ -104,21 +104,44 @@
          <main role="main" class="container">       
 
          <div class="row">
-             <div class="col-md-4">
-                 
-             </div>
              
-             <div class="col-md-3">
+             <div class="col-md-12">
                  <div class="text-center">              
                      <div class="card shadow">
                          <div class="text-center">
                             <div class="card-body">     
-                                 <form class="d-flex" action="#" method="post">      
-                                     <div class="mb-6">
-                                        <label for="exampleInputEmail1" class="form-label">Travel Date</label>
-                                           <input type="date" class="form-control" id="date" name="traveldate">
-                                           <br>
-                                           <button type="submit" class="btn btn-primary">Search For Rooms</button>                  
+                                <form class="d-flex" action="#" method="post">      
+                                    <div class="mb-6">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <label for="exampleInputEmail1" class="form-label">Check in</label>
+                                                </th>
+                                                <th>
+                                                    <label for="exampleInputEmail1" class="form-label">Check out</label>
+                                                </th>
+                                                <th colspan="2">
+                                                    <label for="exampleInputEmail1" class="form-label">Guest</label>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="date" class="form-control" id="date_in" name="traveldate">
+                                                </td>
+                                                <td>
+                                                    <input type="date" class="form-control" id="date_out" name="traveldate">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="guest_adult" name="guest" min="1" max="5" value="2">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="guest_child" name="guest" min="0" max="5" value="0">
+                                                </td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary">Search For Rooms</button> 
+                                                </td>
+                                            </tr>
+                                         </table>        
                                       </div>
                               </form>    
                          </div>      
@@ -126,11 +149,12 @@
                     </div>  
                   </div>
                 </div>
-             <div class="col-md-4">
-                 
-             </div>
              
          </div>
+             
+        <div class="row">
+            
+        </div>
 
       </main>
 

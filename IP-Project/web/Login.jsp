@@ -80,8 +80,8 @@
                          <br>
                          <button type="submit" class="btn btn-primary">Login</button> Dont have an account yet? 
                            <a href="register.html"><button type="button" class="btn btn-danger" >Sign Up</button></a>
-
                      </form>
+                         
                   </div>
                </div>
                
