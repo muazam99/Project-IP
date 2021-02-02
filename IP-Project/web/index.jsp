@@ -15,7 +15,7 @@
                 .container {
                 position: relative;
                 text-align: center;
-                color: white;
+                
               }
 
               /* Bottom left text */
@@ -130,7 +130,7 @@
          <div class="jumbotron">
                 <div class="container">
                   <img src="image/cover.png" alt="Snow" style="width:100%;">
-                  <div class="centered"><h1 class="display-3">
+                  <div class="centered" style="color:white;"><h1 class="display-3" >
                           <b>Welcome to Faiq Hotel</b></h1>
                           <p>
                      Find deals on hotels, home and much more....
@@ -147,18 +147,34 @@
          <main role="main" class="container">       
 
          <div class="row">
-             <div class="col-md-12">
+             <div class="col-md-4">
+                 
+             </div>
+             
+             <div class="col-md-3">
                  <div class="text-center">              
                      <div class="card shadow">
-                         <div class="card-body">                       
-                            <form class="d-flex" action="#" method="post">                    
-                                <input class="form-control me-2" type="datetime-local" placeholder="Input your date" aria-label="Search"> i
-                                 <button class="btn btn-primary" type="submit"> Search For Room</button>                           
-                            </form>                      
+                          <div class="text-center">
+                         <div class="card-body">     
+                            <form class="d-flex" action="#" method="post">      
+                               
+                                     <div class="mb-6">
+                                        <label for="exampleInputEmail1" class="form-label">Travel Date</label>
+                                           <input type="date" class="form-control" id="date" name="traveldate">
+                                           <br>
+                                           <button type="submit" class="btn btn-primary">Search For Rooms</button>                  
+                                      </div>
+                                
+                            </form>    
+                            </div>      
                      </div>  
                  </div>  
                </div>
              </div>
+             <div class="col-md-4">
+                 
+             </div>
+             
          </div>
 
       </main>
@@ -171,5 +187,20 @@
       <script src="js/popper.min.js"></script>      
       <script src="js/bootstrap.min.js"></script>
       <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+      
+      
+      <script>
+         $('#traveldate').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy'
+         });
+
+         $("form").submit(function(event){
+            event.preventDefault();
+            alert($("#traveldate").val());
+            return false;
+         });
+      </script>    
+      
    </body>   
 </html>
