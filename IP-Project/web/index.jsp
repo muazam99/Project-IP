@@ -129,7 +129,7 @@
          <!-- Main jumbotron for a primary marketing message or call to action -->
          <div class="jumbotron">
                 <div class="container">
-                  <img src="image/cover.jpg" alt="Snow" style="width:100%;">
+                  <img src="image/cover.png" alt="Snow" style="width:100%;">
                   <div class="centered"><h1 class="display-3">
                           <b>Welcome to Faiq Hotel</b></h1>
                           <p>
@@ -152,7 +152,7 @@
                      <div class="card shadow">
                          <div class="card-body">                       
                             <form class="d-flex" action="#" method="post">                    
-                                <input class="form-control me-2" type="datetime-local" placeholder="Input your date" aria-label="Search"> 
+                                <input class="form-control me-2" type="datetime-local" placeholder="Input your date" aria-label="Search"> i
                                  <button class="btn btn-primary" type="submit"> Search For Room</button>                           
                             </form>                      
                      </div>  
