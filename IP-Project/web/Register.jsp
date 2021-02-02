@@ -50,18 +50,16 @@
                         <div class="card-body">
                             <h2>Register To Continue Booking</h2>
                             <br>
-                            <form action="RegisterController" method="post">
+                            <form action="manageUserController?command=Register" method="post">
 
                                 <label for="floatingPassword"><b>Name</b></label>
                                 <div class="input-group mb-3">            
-                                    <input type="text" class="form-control" placeholder="Full Name" name="Name" required>
+                                    <input type="text" class="form-control" placeholder="Full Name" name="name" required>
                                 </div>
 
                                 <div class="form-floating">
                                     <label for="floatingPassword"><b>Password</b></label>
-                                    <input type="password" class="form-control" id="floatingPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
-                                           placeholder="Password" name="password" required>  
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required>  
                                 </div>
 
                                 <div class="form-floating">

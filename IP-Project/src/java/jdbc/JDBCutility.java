@@ -36,7 +36,7 @@ public class JDBCutility {
            {
                 String driver = "com.mysql.jdbc.Driver";
                
-                String dbName = "FaiqHotelDB";
+                String dbName = "faiqhoteldb";
                 String host = "localhost";
                 String port = "3306";
                 String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false";
