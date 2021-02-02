@@ -48,7 +48,7 @@
 
                     <div class="card shadow">
                         <div class="card-body">
-                            <h2>Register To Faiq Hotel</h2>
+                            <h2>Register To Continue Booking</h2>
                             <br>
                             <form action="RegisterController" method="post">
 

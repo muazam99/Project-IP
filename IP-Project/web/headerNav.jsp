@@ -58,14 +58,18 @@
 
                <ul class="navbar-nav">
                    
+                   <div class="offset-md-3">
                   <li class="nav-item">
-                    <a href="NavBarController?command=Register-Page" class="btn btn-light" role="button" data-bs-toggle="button">Register</a>
-                  </li>      
+                         <a href="NavBarController?command=Register-Page" class="btn btn-light" role="button" data-bs-toggle="button">Register</a>
+                  </li>  
+                   </div>
                   
+                   <div class="offset-md-2">
                   <li class="nav-item">
                     <a href="NavBarController?command=Login-Page" class="btn btn-dark" role="button" data-bs-toggle="button">Login</a>
                   </li>
-                                  
+                  </div>  
+                   
                </ul>
             </div>
          </div>   
