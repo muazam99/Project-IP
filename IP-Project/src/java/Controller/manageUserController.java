@@ -87,7 +87,7 @@ public class manageUserController extends HttpServlet {
        
         try{          
             String query = "INSERT INTO client (name, password , email , phoneNo , role ) VALUES (?,?,?,?,? ) ";
-            
+                
             ps.setString(1, name);
             ps.setString(2, password);
             ps.setString(3, email);
