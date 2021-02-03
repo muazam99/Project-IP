@@ -99,7 +99,6 @@
 
             </div>
          
-         </div>
          
          <main role="main" class="container">       
 
