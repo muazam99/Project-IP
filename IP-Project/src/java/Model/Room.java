@@ -7,6 +7,7 @@ package Model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -110,12 +111,18 @@ public class Room {
             if (preparedStatementInsert != null)
             {
                 //insertSuccess = true;
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("SUCCESS!");
+                } 
                 String message = "Data added successfully";
                 HttpSession session = request.getSession();
                 session.setAttribute("alertMsg", message);    
             } 
             else
             {
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("NOSUCCESS!");
+                } 
                 String message = "Data added unsuccessful";
                 HttpSession session = request.getSession();
                 session.setAttribute("alertMsg", message);
