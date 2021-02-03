@@ -24,11 +24,44 @@ import jdbc.JDBCutility;
  */
 @WebServlet(name = "manageUserController", urlPatterns = {"/manageUserController"})
 public class manageUserController extends HttpServlet {
+    
+    
+    private JDBCutility jdbcUtility;   
+    private Connection con;
+    
+    @Override
+    public void init() throws ServletException{
+        
+         String driver = "com.mysql.jdbc.Driver"; 
+        String dbName = "faiqhoteldb";
+        String url = "jdbc:mysql://localhost:3306/" + dbName + "?";
+        String userName = "root";
+        String password = "";
 
+        jdbcUtility = new JDBCutility(driver,
+                                      url,
+                                      userName,
+                                      password);
+
+        jdbcUtility.jdbcConnect();
+        
+        //get JDC connection
+        con = jdbcUtility.jdbcGetConnection();
+        
+        //prepare the statement once only
+        //for the entire servlet lifecycle
+        jdbcUtility.prepareSQLStatementRegister();
+             
+    }
+    
+    @Override
+    
+    public void destroy(){
+        jdbcUtility.jdbcConClose();
+    }
     
     
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       
          
@@ -36,9 +69,9 @@ public class manageUserController extends HttpServlet {
              
         
     }
-    
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     
+     
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String command = request.getParameter("command");
@@ -71,42 +104,42 @@ public class manageUserController extends HttpServlet {
         }
         
     }
-    
-    
-    public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException{
+     
+     public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
-        Connection con = null;
-        PreparedStatement ps = null;
-        con = JDBCutility.getCon();
-        
+    
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String phoneNo = request.getParameter("phoneNo");
-        String role = "CLIENT";
-       
-        try{          
-            String query = "INSERT INTO client (name, password , email , phoneNo , role ) VALUES (?,?,?,?,? ) ";
-            
+        
+      
+        try{       
+            String role = "CLIENT";
+            PreparedStatement ps = jdbcUtility.getRegisterClient();
+                     
             ps.setString(1, name);
             ps.setString(2, password);
             ps.setString(3, email);
             ps.setString(4, phoneNo);
             ps.setString(5, role);
+
             
             int insertStatus = 0;
             insertStatus = ps.executeUpdate();
-            PrintWriter out = response.getWriter();
-            out.println(insertStatus);
+            
             
              if (insertStatus == 1) {
-                out.println("<script>");
-                out.println("  alert('Register Success');");
-                out.println("    window.location = '" + request.getContextPath() + "/NavBarController?command=Login-Page'");
-                out.println("</script>");
+                 try(PrintWriter out = response.getWriter()){
+                      out.println("<script>");
+                    out.println("  alert('Register Success');");
+                    out.println("    window.location = '" + request.getContextPath() + "/NavBarController?command=Login-Page'");
+                    out.println("</script>");
+                 }
+               
             }
 
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             while (ex != null) {
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("Message:  " + ex.getMessage());
@@ -118,16 +151,17 @@ public class manageUserController extends HttpServlet {
             PrintWriter out = response.getWriter();
 
             out.println("<script>");
-            out.println("    alert('alumni insert failed sqlexception ');");
+            out.println("    alert('Client insert failed sqlexception ');");
             out.println("    window.location = '" + request.getContextPath() + "/NavBarController?command=Register-Page'");
             out.println("</script>");
-        } catch (java.lang.Exception ex) {
+        }
+        catch (java.lang.Exception ex) {
             ex.printStackTrace();
 
             PrintWriter out = response.getWriter();
 
             out.println("<script>");
-            out.println("    alert('alumni insert failed exception');");
+            out.println("    alert('Client insert failed exception');");
             out.println("    window.location = '" + request.getContextPath() + "/NavBarController?command=Register-Page'");
             out.println("</script>");
         }
@@ -137,6 +171,20 @@ public class manageUserController extends HttpServlet {
     public void Login(HttpServletRequest request, HttpServletResponse response){
         
     }
+    
+    
+    
+    
+    
+
+    }
+
+
+    
+   
+    
+    
+    
 
   
-}
+
