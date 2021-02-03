@@ -100,21 +100,21 @@
     <body>
         
         <jsp:include page="headerNav.jsp" />
-        
+        <jsp:useBean id="client" class="Model.Client" scope="session" />
         <main role="main" class="container">
             <div class="row">      
                 <div class="card-body"> 
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2"><h1>A</h1></th>
+                                <th colspan="2"><img src="image/a.jpg"</th>
                             </tr>
                             <tr><td colspan="2">Role : Admin</td></tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th>Name</th>
-                                <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="John Doe" readonly></td>
+                                <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="<jsp:getProperty name="client" property="name"/>" readonly></td>
                             </tr>
                             <tr>
                                 <th>Email</th>

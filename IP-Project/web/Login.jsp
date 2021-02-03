@@ -81,7 +81,11 @@
                          <button type="submit" class="btn btn-primary">Login</button> Dont have an account yet? 
                            <a href="register.html"><button type="button" class="btn btn-danger" >Sign Up</button></a>
                      </form>
-                         <a href="profile.jsp">profile</a>
+                         <form action="ProfileController" method="POST">
+                             <input type="hidden" name="option" value="view">
+                             <button type="submit">profile</button>
+                         </form>
+                         
                   </div>
                </div>
                

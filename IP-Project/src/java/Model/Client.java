@@ -11,12 +11,13 @@ package Model;
  */
 public class Client{
     
-     private String ID;    
+    private String ID;    
     private String name;
     private String password;
     private String email;
     private String role;
     private String phoneNo;
+    private String picture;
     
     private boolean bookingStatus;
     private Room bookingDetail;
@@ -102,7 +103,19 @@ public class Client{
         this.bookingDetail = bookingDetail;
     }
     
-    
+    /**
+     * @return the picture
+     */
+    public String getPicture() {
+        return picture;
+    }
+
+    /**
+     * @param picture the picture to set
+     */
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
     
     
 }

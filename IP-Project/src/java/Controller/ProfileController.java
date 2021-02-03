@@ -5,6 +5,8 @@
  */
 package Controller;
 
+import Model.Client;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,7 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import jdbc.JDBCutility;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -28,7 +33,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * @author hafizul
  */
 @WebServlet(name = "editProfileController", urlPatterns = {"/editProfileController"})
-public class editProfileController extends HttpServlet {
+public class ProfileController extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
      
@@ -53,11 +58,52 @@ public class editProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Connection con = null;
-        PreparedStatement ps = null;
-        con = JDBCutility.getCon();
+        HttpSession session = request.getSession();
         
-        // checks if the request actually contains upload file
+        String option = request.getParameter("option");
+        if (option==null) {
+            option = "";
+        }
+        
+        switch(option){
+            case "view":{
+                Connection con = null;
+                PreparedStatement ps = null;
+                con = JDBCutility.getCon();
+                ResultSet rs;
+                String status = "";
+                try{
+                    
+                    String queryClient = "SELECT * FROM client"; 
+                    ps = con.prepareStatement(queryClient);
+                    
+                    rs = ps.executeQuery();
+                    while(rs.next()){
+                        Client c = new Client();
+                        c.setName(rs.getString("name"));
+                        c.setEmail(rs.getString("email"));
+                        session.setAttribute("client", c);
+                        status = "SUCCESS";
+                    }
+                    
+                    
+                }catch(SQLException e){
+
+                }
+                if(status.equals("SUCCESS"))   //On success, you can display a message to user on Home page
+                {
+                    request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+                }
+                else
+                {
+                    request.setAttribute("errMessage", status);
+                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                }
+        
+        
+            }
+            case "edit":{
+                // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
             // if not, we stop here
             PrintWriter writer = response.getWriter();
@@ -127,22 +173,64 @@ public class editProfileController extends HttpServlet {
                 }
             }
             
-            String query = "INSERT INTO user (profile ) VALUES (? ) ";
-            ps.setString(1, fileName);
-            
-            int uploadStatus = 0;
-            uploadStatus = ps.executeUpdate();
-            if(uploadStatus == 1){
-                request.getRequestDispatcher("/profile.jsp").forward(request, response);
-            }
-            else
-            {
-                request.setAttribute("errMessage", uploadStatus);
-                request.getRequestDispatcher("/editProfile.jsp").forward(request, response);
-            }
-            
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) {
         }
+        String name = "John";
+        String email = "gmail.com";
+        try{
+            
+            Connection con = null;
+            PreparedStatement ps = null;
+            con = JDBCutility.getCon();
+        
+            Client c = new Client();
+            c.setPicture(fileName);
+            c.setName(name);
+            int uploadStatus = 0;
+            
+                String query = "INSERT INTO client (name) VALUES (?) ";
+                ps = con.prepareStatement(query);
+                ps.setString(1, c.getName());
+//                ps.setString(2, c.getPicture());
+
+                uploadStatus = ps.executeUpdate();
+                PrintWriter out = response.getWriter();
+                if(uploadStatus == 1){
+                    out.println("<script>");
+                    out.println("    alert('User Registration Success');");
+                    out.println("    window.location = '/IP-Project/profile.jsp'");
+                    out.println("</script>");
+                }
+            }
+            catch(SQLException ex){
+                while (ex != null) {
+                    System.out.println ("SQLState: " + ex.getSQLState ());
+                    System.out.println ("Message:  " + ex.getMessage ());
+                    System.out.println ("Vendor:   " + ex.getErrorCode ());
+                    ex = ex.getNextException ();
+                    System.out.println ("");
+                }
+
+                PrintWriter out = response.getWriter();
+
+                out.println("<script>");
+                out.println("    alert('User Registration Failed');");
+                out.println("    window.location = '/IP-Project/editProfile.jsp'");
+                out.println("</script>");            
+            }
+            catch (java.lang.Exception ex){
+                ex.printStackTrace ();
+
+                PrintWriter out = response.getWriter();
+
+                out.println("<script>");
+                out.println("    alert('User Registration Failed 2');");
+                out.println("    window.location = '/IP-Project/editProfile.jsp'");
+                out.println("</script>");}
+            }
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -157,7 +245,6 @@ public class editProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
