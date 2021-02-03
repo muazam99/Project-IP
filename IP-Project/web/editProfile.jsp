@@ -123,7 +123,7 @@
                                     <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="John Doe" readonly></td>
                                 </tr>
                                 <tr>
-                                    <th>Email</th>
+                                    <th>Email </th>
                                     <td><input type="email" class="form-control input" name="email" id="email" value="JohnDoe@gmail.com" ></td>
                                 </tr>
                                 <tr>
