@@ -186,7 +186,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Add New Room</h5>
                             <p class="card-text">Add and create new upcoming event.</p>
-                            <input type="submit" class="btn btn-outline-primary btn-lg" name="command" value="Add Room Form" />
+                            <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="Add-Room-Form" />
                         </div>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Deleting Room</h5>
                             <p class="card-text">Delete and remove any room.</p>
-                            <input type="submit" class="btn btn-outline-danger btn-lg" name="command" value="Delete Room" />
+                            <input type="submit" class="btn btn-outline-danger btn-lg" id="command" name="command" value="Delete-Room" />
                         </div>
                     </div>
                 </div>
@@ -206,7 +206,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Updating Room</h5>
                             <p class="card-text">Update or modify any room.</p>
-                            <input type="submit" class="btn btn-outline-success btn-lg" name="command" value="Update Room" />
+                            <input type="submit" class="btn btn-outline-success btn-lg" id="command" name="command" value="Update-Room" />
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,17 @@
 <%-- 
-    Document   : AddRoomInterface
-    Created on : Feb 3, 2021, 9:36:29 PM
+    Document   : UpdateRoomForm
+    Created on : Feb 4, 2021, 5:54:36 AM
     Author     : Muhammad Faiq
 --%>
 
+<%@page import="java.util.Base64"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Controller.*"%>
+<%@page import="Model.*"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page language="java" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%!Room room=new Room();%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,8 +27,11 @@
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
-        
-        <form  name="AddRoomform" method="post" action="ManageRoomController" enctype="multipart/form-data">
+        <%
+            ArrayList<Room> updateroomlist = (ArrayList<Room>)session.getAttribute("updateroomlist");
+            int i=0;
+        %>
+        <form  name="UpdateRoomform" method="post" action="ManageRoomController" enctype="multipart/form-data">
             
             <div class="container pb-5">
             <div class="row align-items-start justify-content-center"></div>
@@ -34,13 +44,13 @@
                                 <div class="col">
                                   <div class="form-floating">
                                     <label for="floatingInput">Room Number</label>
-                                    <input type="text" class="form-control" id="roomNo" placeholder="Room Number" name="roomNo" size="100" required>                                    
+                                    <input type="text" class="form-control" id="roomNo" placeholder="Room Number" name="roomNo" size="100" value="<%=((Room)updateroomlist.get(i)).getRoomNo()%>" required>                                    
                                   </div>
                                 </div>
                                 <div class="col-md">
                                   <div class="form-floating">
                                     <label for="floatingInput">Room Type</label>
-                                    <select class="form-control" id="roomType" placeholder="Room Type" name="roomType" required>
+                                    <select class="form-control" id="roomType" placeholder="Room Type" name="roomType" value="<%=((Room)updateroomlist.get(i)).getRoomType()%>" required>
                                         <option></option>
                                         <option value="Single">Single</option>
                                         <option value="Double">Double</option>
@@ -54,7 +64,7 @@
                                 <div class="col">
                                   <div class="form-floating">
                                     <label for="floatingInput">Room Fee</label>
-                                    <input type="text" class="form-control" id="roomPrice" placeholder="Room Fee" name="roomPrice" size="100" required>                                    
+                                    <input type="text" class="form-control" id="roomPrice" placeholder="Room Fee" name="roomPrice" size="100" value="<%=((Room)updateroomlist.get(i)).getRoomPrice()%>" required>                                    
                                   </div>
                                 </div>
                                 <div class="col-md">
@@ -66,9 +76,11 @@
                             </div>
                         </div>
                     </div>
+                    <% int roomID =((Room)updateroomlist.get(i)).getRoomID();%>
+                    <input type="hidden" name="roomID" value=<%=roomID %> >
                     <div class="d-grid gap-2 col-3 mx-auto pt-1">
                         <input class="btn btn-warning" type="reset" id="buttonreset" name="buttonreset" value="Reset Form">
-                        <input class=" btn btn-primary" type="submit" id="command" name="command" value="Add-Room">                                            
+                        <input class=" btn btn-primary" type="submit" id="command" name="command" value="Update Room Form">                                            
                     </div>
                     <div class="d-grid gap-2 col-2 mx-auto pt-2">
                         <a class="btn btn-success" href="index.jsp" role="button">Room Menu</a>                                           
@@ -84,3 +96,4 @@
         
     </body>
 </html>
+
