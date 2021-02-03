@@ -5,10 +5,12 @@
  */
 package jdbc;
 
+import Model.User;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,13 +87,34 @@ public class JDBCutility {
             ex.printStackTrace ();
         }  
     }
+     public void loadDriver(String driver)
+	{
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+	}
+    
+    public Connection getConnection()
+	{
+		Connection con = null;
+		try {
+			con = DriverManager.getConnection(url, userName, password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return con;
+	}
     
      public void prepareSQLStatementRegister(){
         
         try {
            
             //create SQL statement
-              String insert_client = "INSERT INTO client (name, password , email , phoneNo, role  ) VALUES (?,?,?,?,? ) "; 
+              String insert_client = "INSERT INTO user (name, password , email , phoneNo, role  ) VALUES (?,?,?,?,? ) "; 
               
             
             //prepare statement
@@ -119,6 +142,37 @@ public class JDBCutility {
     public PreparedStatement getRegisterClient(){
         return RegisterPS;
     }
+    
+    
+    //LOGIN
+    
+    public User checkLogin(String email, String password)throws SQLException,
+            ClassNotFoundException {
+        
+         
+        loadDriver(driver);
+        Connection con = getConnection();
+        
+        String sql = "select * from user where email = ? and password = ?";
+        PreparedStatement ps;
+        
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            
+            ResultSet result=ps.executeQuery();
+            
+            User user = null;
+            
+            if(result.next()){
+                
+                user.setName(result.getString("name"));
+                user.setEmail(email);
+                user.setRole(result.getString("role"));
+            }
+             con.close();      
+            return user;  
+            }
     
 }
 

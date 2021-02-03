@@ -5,16 +5,21 @@
  */
 package Controller;
 
+import Model.Admin;
+import Model.Client;
+import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jdbc.JDBCutility;
 
@@ -168,8 +173,33 @@ public class manageUserController extends HttpServlet {
                 
      }
     
-    public void Login(HttpServletRequest request, HttpServletResponse response){
+    public void Login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+              
+        try{
+           User user = jdbcUtility.checkLogin(email, password);
+           String destPage = "index.jsp";
+           
+           if(user != null){
+                       
+                      HttpSession session = request.getSession();
+                      session.setAttribute("USER", user);                                               
+           }
+         
+           else{
+               String message = "Invalid email or password";
+               request.setAttribute("message", message);
+           }
+           
+            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+            dispatcher.forward(request, response);
+        } catch (SQLException | ClassNotFoundException ex) {
+            throw new ServletException(ex);
+
+    }
     }
     
     

@@ -66,7 +66,7 @@
                       
                      <h2>Login To Faiq Hotel</h2>
                      <br>
-                     <form action="SignInController" method="post">
+                     <form action="manageUserController?command=Login" method="post">
                      <div class="form-floating sm-3">
                          <label for="floatingInput">Email address</label>
                          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="Email" required>           
@@ -79,7 +79,7 @@
                          <br>${message}
                          <br>
                          <button type="submit" class="btn btn-primary">Login</button> Dont have an account yet? 
-                           <a href="register.html"><button type="button" class="btn btn-danger" >Sign Up</button></a>
+                           <a href="NavBarController?command=Register-Page"><button type="button" class="btn btn-danger" >Sign Up</button></a>
                      </form>
                          <form action="ProfileController" method="POST">
                              <input type="hidden" name="option" value="view">
