@@ -52,7 +52,7 @@
                             <br>
                             <form action="manageUserController?command=Register" method="post">
 
-                                <label for="floatingPassword"><b>Name</b></label>
+                       <label for="floatingPassword"><b>Name</b></label>
                                 <div class="input-group mb-3">            
                                     <input type="text" class="form-control" placeholder="Full Name" name="name" required>
                                 </div>
