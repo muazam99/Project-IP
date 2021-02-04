@@ -5,15 +5,8 @@
  */
 package jdbc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Model.User;
-=======
+
 import Model.Admin;
->>>>>>> 013ac27a31e6bf762dda2436af1a386d07b848c2
-=======
-import Model.Admin;
->>>>>>> 013ac27a31e6bf762dda2436af1a386d07b848c2
 import Model.Client;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -123,7 +116,7 @@ public class JDBCutility {
         try {
            
             //create SQL statement
-              String insert_client = "INSERT INTO user (name, password , email , phoneNo, role  ) VALUES (?,?,?,?,? ) "; 
+              String insert_client = "INSERT INTO client (name, password , email , phoneNo, role  ) VALUES (?,?,?,?,? ) "; 
               
             
             //prepare statement
@@ -203,7 +196,7 @@ public class JDBCutility {
             Admin admin = null;
             
             if(result.next()){
-               admin = new Admin();
+                admin = new Admin();
                 admin.setName(result.getString("name"));
                 admin.setEmail(email);
                 admin.setRole(result.getString("role"));

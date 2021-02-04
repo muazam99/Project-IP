@@ -55,8 +55,13 @@
                  
                  
                </ul>
+                  
+                  
 
                <ul class="navbar-nav">
+                  
+                         
+                    
                    
                    <div class="offset-md-3">
                   <li class="nav-item">
@@ -69,8 +74,15 @@
                     <a href="NavBarController?command=Login-Page" class="btn btn-dark" role="button" data-bs-toggle="button">Login</a>
                   </li>
                   </div>  
-                   
+             
+                <div class="offset-md-3">
+                       <li class="nav-item">
+                         <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>
+                      </li>  
+                  </div>
                </ul>
+                  
+                  
             </div>
          </div>   
       </nav>   

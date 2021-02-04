@@ -68,7 +68,30 @@ public class manageUserController extends HttpServlet {
      protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       
-         
+         String command = request.getParameter("command");
+        
+        if(command==null){
+            command="";
+        }
+        
+        try{
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0);
+            
+            switch(command){
+                
+                case "Logout" :
+                    Logout(request , response);
+                    break;
+                    
+                default :
+                   request.getRequestDispatcher("index.jsp").forward(request, response);
+                   break;
+            }
+        }catch (Exception exc) {
+            throw new ServletException(exc);
+        }
         
              
         
@@ -108,6 +131,20 @@ public class manageUserController extends HttpServlet {
         }
         
     }
+     
+    public void Logout(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        
+         HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+     
      
      public void Register(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
@@ -185,25 +222,30 @@ public class manageUserController extends HttpServlet {
            
            
            if(client != null){
-                       admin = null;
+                      admin = null;
                       HttpSession session = request.getSession();
                       session.setAttribute("CLIENT", client);  
-                       destPage = "LoggedInIndex.jsp";
+                      destPage = "LoggedInIndex.jsp";
+                      RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+                      dispatcher.forward(request, response);
            }
            else if(admin != null){
                         client = null;
                       HttpSession session = request.getSession();
                       session.setAttribute("ADMIN", admin);   
                        destPage = "LoggedInIndex.jsp";
+                       RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+                      dispatcher.forward(request, response);
            }
          
            else{
                String message = "Invalid email or password";
                request.setAttribute("message", message);
+               RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
+               dispatcher.forward(request, response);
            }
            
-            RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
-            dispatcher.forward(request, response);
+           
         } catch (SQLException | ClassNotFoundException ex) {
             throw new ServletException(ex);
 

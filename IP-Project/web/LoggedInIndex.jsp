@@ -112,10 +112,14 @@
             <c:when test="${CLIENT != null}">
                  <jsp:include page="headerNav.jsp" />  
             </c:when>
+            
+            
             <c:otherwise>
                 
             </c:otherwise>
-        </c:choose>         
+        </c:choose>       
+        
+        
         ${CLIENT.getName()}
         ${ADMIN.getName()}
          <div class="row">
