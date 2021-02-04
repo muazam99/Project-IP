@@ -100,7 +100,7 @@
     <body>
         
         <jsp:include page="headerNav.jsp" />
-        <jsp:useBean id="client" class="Model.Client" scope="session" />
+        <jsp:useBean id="user" class="Model.Client" scope="session" />
         <main role="main" class="container">
             <div class="row">      
                 <div class="card-body"> 
@@ -114,11 +114,11 @@
                         <tbody>
                             <tr>
                                 <th>Name</th>
-                                <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="<jsp:getProperty name="client" property="name"/>" readonly></td>
+                                <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="<jsp:getProperty name="user" property="name"/>" readonly></td>
                             </tr>
                             <tr>
                                 <th>Email</th>
-                                <td><input type="email" class="form-control-plaintext input" name="email" id="email" value="JohnDoe@gmail.com" readonly></td>
+                                <td><input type="email" class="form-control-plaintext input" name="email" id="email" value="<jsp:getProperty name="user" property="email"/>" readonly></td>
                             </tr>
                             <tr>
                                 <th>Password</th>
