@@ -98,11 +98,11 @@
                                     <form  name="DeleteUpdateForm" action="ManageRoomController" method="post" enctype="multipart/form-data">
                                         <label>       
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-primary btn-sm" type="submit" name="Update" id="Update" value="Update">
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Update">
                                         </label> 
                                         <label>
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-danger btn-sm" type="submit" name="Delete" id="Delete" value="Delete">
+                                            <input class="btn btn-danger btn-sm" type="submit" name="command" id="command" value="Delete">
                                         </label>
                                     </form>
                                 </td>    
@@ -164,11 +164,11 @@
                                     <form  name="DeleteUpdateForm" action="${pageContext.request.contextPath}/ManageRoomController" method="post">
                                         <label>       
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-primary btn-sm" type="submit" name="Update" id="Update" value="Update">
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Update">
                                         </label> 
                                         <label>
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-danger btn-sm" type="submit" name="Delete" id="Delete" value="Delete">
+                                            <input class="btn btn-danger btn-sm" type="submit" name="command" id="command" value="Delete">
                                         </label>
                                     </form>
                                 </td>    
@@ -230,11 +230,11 @@
                                     <form  name="DeleteUpdateForm" action="${pageContext.request.contextPath}/ManageRoomController" method="post">
                                         <label>       
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-primary btn-sm" type="submit" name="Update" id="Update" value="Update">
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Update">
                                         </label> 
                                         <label>
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-danger btn-sm" type="submit" name="Delete" id="Delete" value="Delete">
+                                            <input class="btn btn-danger btn-sm" type="submit" name="command" id="command" value="Delete">
                                         </label>
                                     </form>
                                 </td>    
@@ -296,11 +296,11 @@
                                     <form  name="DeleteUpdateForm" action="${pageContext.request.contextPath}/ManageRoomController" method="post">
                                         <label>       
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-primary btn-sm" type="submit" name="update" id="update" value="Update">
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Update">
                                         </label> 
                                         <label>
                                             <input type="hidden" name="roomID" value=<%=roomID %> >
-                                            <input class="btn btn-danger btn-sm" type="submit" name="delete" id="delete" value="Delete">
+                                            <input class="btn btn-danger btn-sm" type="submit" name="command" id="command" value="Delete">
                                         </label>
                                     </form>
                                 </td>    

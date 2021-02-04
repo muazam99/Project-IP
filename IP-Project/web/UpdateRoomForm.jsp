@@ -29,7 +29,12 @@
     <body>
         <%
             ArrayList<Room> updateroomlist = (ArrayList<Room>)session.getAttribute("updateroomlist");
-            int i=0;
+            int i=0,k=0;
+            ArrayList<String> roomtypeArray = new ArrayList<String>();
+            roomtypeArray.add("Single");
+            roomtypeArray.add("Double");
+            roomtypeArray.add("Triple");
+            roomtypeArray.add("Quad");
         %>
         <form  name="UpdateRoomform" method="post" action="ManageRoomController" enctype="multipart/form-data">
             
@@ -50,12 +55,21 @@
                                 <div class="col-md">
                                   <div class="form-floating">
                                     <label for="floatingInput">Room Type</label>
-                                    <select class="form-control" id="roomType" placeholder="Room Type" name="roomType" value="<%=((Room)updateroomlist.get(i)).getRoomType()%>" required>
+                                    <select class="form-control" id="roomType" placeholder="Room Type" name="roomType" required>
                                         <option></option>
-                                        <option value="Single">Single</option>
-                                        <option value="Double">Double</option>
-                                        <option value="Triple">Triple</option>
-                                        <option value="Quad">Quad</option>
+                                        <%
+                                            for(int j=0; j<roomtypeArray.size();j++)
+                                            {
+                                                if((((Room)updateroomlist.get(i)).getRoomType()).equals(roomtypeArray.get(j)))
+                                                {%>
+                                                    <option value="<%=roomtypeArray.get(j)%>" selected><%=roomtypeArray.get(j)%></option>
+                                                <%}
+                                                else
+                                                {%>
+                                                    <option value="<%=roomtypeArray.get(j)%>"><%=roomtypeArray.get(j)%></option>
+                                                <%}
+                                            }
+                                        %>
                                     </select>
                                   </div>
                                 </div>
@@ -80,7 +94,7 @@
                     <input type="hidden" name="roomID" value=<%=roomID %> >
                     <div class="d-grid gap-2 col-3 mx-auto pt-1">
                         <input class="btn btn-warning" type="reset" id="buttonreset" name="buttonreset" value="Reset Form">
-                        <input class=" btn btn-primary" type="submit" id="command" name="command" value="Update Room Form">                                            
+                        <input class=" btn btn-primary" type="submit" id="command" name="command" value="Update Room">                                            
                     </div>
                     <div class="d-grid gap-2 col-2 mx-auto pt-2">
                         <a class="btn btn-success" href="index.jsp" role="button">Room Menu</a>                                           
