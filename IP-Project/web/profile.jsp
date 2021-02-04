@@ -72,6 +72,16 @@
               .input{
                   text-align: center;
               }
+              
+              #profile{
+                  padding : 10px;
+              }
+              
+              img{
+                  
+                  max-width : 100%;
+                  height : auto;
+              }
         
           
          .bd-placeholder-img {
@@ -107,9 +117,9 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2"><img src="image/a.jpg"</th>
+                                <th colspan="2"><img id="profile" src="image/default.png"></th>
                             </tr>
-                            <tr><td colspan="2">Role : Admin</td></tr>
+                            <tr><td colspan="2">Role : <jsp:getProperty name="user" property="role"/></td></tr>
                         </thead>
                         <tbody>
                             <tr>
@@ -122,11 +132,11 @@
                             </tr>
                             <tr>
                                 <th>Password</th>
-                                <td><input type="password" class="form-control-plaintext input" name="password" id="password" value="" readonly></td>
+                                <td><input type="password" class="form-control-plaintext input" name="password" id="password" value="<jsp:getProperty name="user" property="password"/>" readonly></td>
                             </tr>
                             <tr>
                                 <th>Phone No.</th>
-                                <td><input type="text" class="form-control-plaintext input" name="phone" id="phone" value="0123456789" readonly></td>
+                                <td><input type="text" class="form-control-plaintext input" name="phone" id="phone" value="<jsp:getProperty name="user" property="phoneNo"/>" readonly></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><a href="editProfile.jsp"><button type="button">Edit Profile</button></a></td>

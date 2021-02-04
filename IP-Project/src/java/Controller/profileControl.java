@@ -85,7 +85,8 @@ public class profileControl extends HttpServlet {
                 break;
                 
             case "edit" :
-                
+                editProfile(request , response);
+                break;
                 
             default :
                 request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -100,19 +101,27 @@ public class profileControl extends HttpServlet {
         HttpSession session = request.getSession();
         
         try{
-            String query = "SELECT * FROM user WHERE userID = 1 ";
-                PreparedStatement preparedStatement = con.prepareStatement(query);
+            String viewProfile = "SELECT * FROM user WHERE userID = 1 ";
+                PreparedStatement preparedStatement = con.prepareStatement(viewProfile);
 
                 ResultSet rs = preparedStatement.executeQuery();
 
                 Client c = new Client();
 
                 while(rs.next()){
+                    String userID = String.valueOf(rs.getInt("userID"));
                     String name = rs.getString("name");
+                    String password = rs.getString("password");
                     String email = rs.getString("email");
-
+                    String phone = rs.getString("phoneNo");
+                    String role = rs.getString("role");
+                    
+                    c.setID(userID);
                     c.setName(name);
+                    c.setPassword(password);
                     c.setEmail(email);
+                    c.setPhoneNo(phone);
+                    c.setRole(role);
 
                     session.setAttribute("user", c);
                     status = "SUCCESS";
@@ -132,5 +141,41 @@ public class profileControl extends HttpServlet {
             }
         }   
           
+    public void editProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+        
+        Client c = new Client();
+        
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+        
+        String userID = c.getID();
+        
+        try{
+            String editProfile = "UPDATE user SET email = ?, password = ?, phone = ? WHERE userID = ? ";
+            PreparedStatement ps = con.prepareStatement(editProfile);
+            
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ps.setString(3, phone);
+            ps.setString(4, userID);
+            
+            int status = 0;
+            status = ps.executeUpdate();
+            
+            if(status == 1){
+                try(PrintWriter out = response.getWriter()){
+                      out.println("<script>");
+                    out.println("  alert('Register Success');");
+                    out.println("    window.location = '" + request.getContextPath() + "/NavBarController?command=Login-Page'");
+                    out.println("</script>");
+                 }
+            }
+            
+            
+        }catch(SQLException ex){
+        }
+        
+    }
 
 }
