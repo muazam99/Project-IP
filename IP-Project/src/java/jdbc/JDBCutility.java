@@ -6,7 +6,11 @@
 package jdbc;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Model.User;
+=======
+import Model.Admin;
+>>>>>>> 013ac27a31e6bf762dda2436af1a386d07b848c2
 =======
 import Model.Admin;
 >>>>>>> 013ac27a31e6bf762dda2436af1a386d07b848c2
