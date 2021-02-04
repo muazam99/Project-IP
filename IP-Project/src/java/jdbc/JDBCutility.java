@@ -5,7 +5,12 @@
  */
 package jdbc;
 
+<<<<<<< HEAD
 import Model.User;
+=======
+import Model.Admin;
+>>>>>>> 013ac27a31e6bf762dda2436af1a386d07b848c2
+import Model.Client;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -146,14 +151,14 @@ public class JDBCutility {
     
     //LOGIN
     
-    public User checkLogin(String email, String password)throws SQLException,
+    public Client checkClientLogin(String email, String password)throws SQLException,
             ClassNotFoundException {
         
          
         loadDriver(driver);
         Connection con = getConnection();
         
-        String sql = "select * from user where email = ? and password = ?";
+        String sql = "select * from client where email = ? and password = ?";
         PreparedStatement ps;
         
             ps = con.prepareStatement(sql);
@@ -162,18 +167,69 @@ public class JDBCutility {
             
             ResultSet result=ps.executeQuery();
             
-            User user = null;
+            Client client = null;
             
             if(result.next()){
-                
-                user.setName(result.getString("name"));
-                user.setEmail(email);
-                user.setRole(result.getString("role"));
+                 client =  new Client();
+                client.setName(result.getString("name"));
+                client.setEmail(email);
+                client.setRole(result.getString("role"));
             }
-             con.close();      
-            return user;  
+             con.close();       
+            return client;  
             }
     
+    
+     public Admin checkAdminLogin(String email, String password)throws SQLException,
+            ClassNotFoundException {
+        
+         
+        loadDriver(driver);
+        Connection con = getConnection();
+        
+        String sql = "select * from admin where email = ? and password = ?";
+        PreparedStatement ps;
+        
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            
+            ResultSet result=ps.executeQuery();
+            
+            Admin admin = null;
+            
+            if(result.next()){
+               admin = new Admin();
+                admin.setName(result.getString("name"));
+                admin.setEmail(email);
+                admin.setRole(result.getString("role"));
+            }
+             con.close();      
+            return admin;  
+            }
+    
+
+    //Profile
+    
+    public Client viewProfile(String userID)throws SQLException,
+            ClassNotFoundException {
+        
+        loadDriver(driver);
+        Connection con = getConnection();
+        
+        String sqlViewProfile = "SELECT * FROM user";
+        PreparedStatement ps = con.prepareStatement(sqlViewProfile);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        Client c = new Client();
+        while(rs.next()){
+            c.setName(rs.getString("name"));
+            c.setEmail(rs.getString("email"));
+        }
+        con.close();      
+        return c;    
+    }
 }
 
 

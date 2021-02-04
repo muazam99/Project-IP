@@ -82,7 +82,7 @@ public class Booking extends HttpServlet {
         throws ServletException, IOException{
         Connection con = null;
         PreparedStatement ps = null;
-        con = JDBCutility.getCon();
+        con = JDBCutility.getConnection();
         
         //search room that is already booked from booking table
         sqlStatement ="SELECT roomID FROM booking WHERE (bookingDateIn >= ? AND bookingDateOut <= ?)";

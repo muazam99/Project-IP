@@ -69,7 +69,7 @@
                      <form action="manageUserController?command=Login" method="post">
                      <div class="form-floating sm-3">
                          <label for="floatingInput">Email address</label>
-                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="Email" required>           
+                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>           
                     </div>
                      
                     <div class="form-floating">
@@ -81,10 +81,11 @@
                          <button type="submit" class="btn btn-primary">Login</button> Dont have an account yet? 
                            <a href="NavBarController?command=Register-Page"><button type="button" class="btn btn-danger" >Sign Up</button></a>
                      </form>
-                         <form action="ProfileController" method="POST">
-                             <input type="hidden" name="option" value="view">
+                         <form action="ProfileController?option=view" method="POST">
                              <button type="submit">profile</button>
                          </form>
+                         
+                         <a href="profile.jsp"><button>profile page</button></a>
                          
                   </div>
                </div>
