@@ -7,7 +7,6 @@ package Controller;
 
 import Model.Admin;
 import Model.Client;
-import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -180,13 +179,22 @@ public class manageUserController extends HttpServlet {
         
               
         try{
-           User user = jdbcUtility.checkLogin(email, password);
-           String destPage = "index.jsp";
+           Client client = jdbcUtility.checkClientLogin(email, password);
+           Admin admin = jdbcUtility.checkAdminLogin(email, password);
+           String destPage = "Login.jsp";
            
-           if(user != null){
-                       
+           
+           if(client != null){
+                       admin = null;
                       HttpSession session = request.getSession();
-                      session.setAttribute("USER", user);                                               
+                      session.setAttribute("CLIENT", client);  
+                       destPage = "LoggedInIndex.jsp";
+           }
+           else if(admin != null){
+                        client = null;
+                      HttpSession session = request.getSession();
+                      session.setAttribute("ADMIN", admin);   
+                       destPage = "LoggedInIndex.jsp";
            }
          
            else{

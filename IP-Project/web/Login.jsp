@@ -69,7 +69,7 @@
                      <form action="manageUserController?command=Login" method="post">
                      <div class="form-floating sm-3">
                          <label for="floatingInput">Email address</label>
-                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="Email" required>           
+                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>           
                     </div>
                      
                     <div class="form-floating">

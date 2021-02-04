@@ -5,7 +5,8 @@
  */
 package jdbc;
 
-import Model.User;
+import Model.Admin;
+import Model.Client;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -146,14 +147,14 @@ public class JDBCutility {
     
     //LOGIN
     
-    public User checkLogin(String email, String password)throws SQLException,
+    public Client checkClientLogin(String email, String password)throws SQLException,
             ClassNotFoundException {
         
          
         loadDriver(driver);
         Connection con = getConnection();
         
-        String sql = "select * from user where email = ? and password = ?";
+        String sql = "select * from client where email = ? and password = ?";
         PreparedStatement ps;
         
             ps = con.prepareStatement(sql);
@@ -162,16 +163,45 @@ public class JDBCutility {
             
             ResultSet result=ps.executeQuery();
             
-            User user = null;
+            Client client = null;
             
             if(result.next()){
-                
-                user.setName(result.getString("name"));
-                user.setEmail(email);
-                user.setRole(result.getString("role"));
+                 client =  new Client();
+                client.setName(result.getString("name"));
+                client.setEmail(email);
+                client.setRole(result.getString("role"));
+            }
+             con.close();       
+            return client;  
+            }
+    
+    
+     public Admin checkAdminLogin(String email, String password)throws SQLException,
+            ClassNotFoundException {
+        
+         
+        loadDriver(driver);
+        Connection con = getConnection();
+        
+        String sql = "select * from admin where email = ? and password = ?";
+        PreparedStatement ps;
+        
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, password);
+            
+            ResultSet result=ps.executeQuery();
+            
+            Admin admin = null;
+            
+            if(result.next()){
+               admin = new Admin();
+                admin.setName(result.getString("name"));
+                admin.setEmail(email);
+                admin.setRole(result.getString("role"));
             }
              con.close();      
-            return user;  
+            return admin;  
             }
     
 }
