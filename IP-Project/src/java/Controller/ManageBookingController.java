@@ -80,18 +80,44 @@ public class ManageBookingController extends HttpServlet {
                     try (PrintWriter out = response.getWriter()) {
                     out.println("Invalid event!");
                 } 
-                     break;
-                
-                case "View-Booking-Page":
-                    viewBookedRoom(request, response);
-                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
-                    break;
+                     break;                
                 
                 case "Check In":
                     request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
                     break;
                     
                 case "Check Out":
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
+                    
+                default :
+                   request.getRequestDispatcher("index.jsp").forward(request, response);
+                   break;
+            }
+        }catch (Exception exc) {
+            throw new ServletException(exc);
+        }
+        
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        
+        String command = request.getParameter("command");
+        
+        if(command==null){
+            command="";
+        }
+        
+        try{
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+            response.setDateHeader("Expires", 0);
+            
+            switch(command){
+                               
+                case "View-Booking-Page":
+                    viewBookedRoom(request, response);
                     request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
                     break;
                     

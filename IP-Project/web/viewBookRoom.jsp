@@ -87,13 +87,13 @@
                                 
                                 <% int bookingID =((Booking)bookingList.get(i)).getBookingID();%>
                                 <td>
-                                    <form  name="DeleteUpdateForm" action="ManageBookingController" method="post" enctype="multipart/form-data">
+                                    <form  name="DeleteUpdateForm" action="${pageContext.request.contextPath}/ManageBookingController" method="post" enctype="multipart/form-data">
                                         <label>
                                             <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check In">
                                         </label>
 
                                         <label>
-                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check In">
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check Out">
                                         </label>
                                     </form>
                                 </td>
