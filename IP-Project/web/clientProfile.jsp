@@ -139,7 +139,7 @@
                                 <td><input type="text" class="form-control-plaintext input" name="phone" id="phone" value="<jsp:getProperty name="user" property="phoneNo"/>" readonly></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><a href="editProfile.jsp"><button type="button">Edit Profile</button></a></td>
+                                <td colspan="2"><a href="clientEditProfile.jsp"><button type="button">Edit Profile</button></a></td>
                             </tr>
                         </tbody>
                     </table>    
