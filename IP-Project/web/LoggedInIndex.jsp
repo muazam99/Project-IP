@@ -107,7 +107,7 @@
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = df.format(new Date());
         %>
-        <!-- include adminHeaderNav.jsp -->    
+             
         <c:choose>
             <c:when test="${CLIENT != null}">
                  <jsp:include page="headerNav.jsp" />  
