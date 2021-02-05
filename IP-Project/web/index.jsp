@@ -101,76 +101,50 @@
          
          <main role="main" class="container">       
 
-             
-        <%  
-            Date date = new Date();
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = df.format(new Date());
-        %>
-             
-
                  <jsp:include page="headerNav.jsp" />  
                  
 
         <c:choose>
             
             <c:when test="${CLIENT != null}">
-                            <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="text-center">              
-                                <div class="card shadow">
-                                    <div class="text-center">
-                                       <div class="card-body">     
-                                           <form class="d-flex" action="${pageContext.request.contextPath}/ManageBookingController" method="post">  
-
-                                                       <div class="offset-md-2">
-                                                       <table>
-                                                               <tr>
-                                                                   <th>
-                                                                       <label for="exampleInputEmail1" class="form-label">Check in</label>
-                                                                   </th>
-                                                                   <th>
-                                                                       <label for="exampleInputEmail1" class="form-label">Check out</label>
-                                                                   </th>
-                                                                   <th colspan="2">
-                                                                       <label for="exampleInputEmail1" class="form-label">Guest</label>
-                                                                   </th>
-                                                               </tr>
-                                                               <tr>
-                                                                   <td>
-                                                                       <input type="date" class="form-control" id="date_in" name="traveldateIn" min="<%=formattedDate%>" >
-                                                                   </td>
-                                                                   <td>
-                                                                       <input type="date" class="form-control" id="date_out" name="traveldateOut" min="<%=formattedDate%>">
-                                                                   </td>
-                                                                   <td>
-                                                                       <input type="number" class="form-control" id="guest_adult" name="guest_adult" min="1" max="5" value="2">
-                                                                   </td>
-                                                                   <td>
-                                                                       <input type="number" class="form-control" id="guest_child" name="guest_child" min="0" max="5" value="0">
-                                                                   </td>
-                                                                   <td>
-                                                                       <input type="submit" name="command" id="Search For Rooms" value="Search For Rooms">
-                                                                   </td>
-                                                               </tr>
-                                                            </table> 
-                                                         </div>                                  
-                                         </form>    
-                                    </div>      
-                                  </div>  
-                               </div>  
-                             </div>
-                           </div>
-
-                    </div>
-
-
-
-                   <div class="row">
-
-                   </div>
-
+                     
+                 
+                          <div class="container pb-5">
+                              <div class="row align-items-start justify-content-center"><h1>Welcome ${CLIENT.getName()}</h1></div>
+                              <div class="row align-items-center pt-4">
+                                  <div class="col">
+                                      <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                          <img src="image/cover.png" class="card-img-top" alt="...">
+                                          <div class="card-body">
+                                              <h5 class="card-title">Book A Room</h5>
+                                              <p class="card-text">Search, and book for any available room</p>
+                                              <a href="ClientController?command=Book-Room-Page" class="btn btn-primary stretched-link">Book Room</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col">
+                                      <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                          <img src="image/cover.png" class="card-img-top" alt="...">
+                                          <div class="card-body">
+                                              <h5 class="card-title">My Booking</h5>
+                                              <p class="card-text">See if you have any upcoming booking</p>
+                                              <a href="ClientController?command=My-Booking-Page" class="btn btn-primary stretched-link">View My Booking</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col">
+                                      <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                          <img src="image/cover.png" class="card-img-top" alt="...">
+                                          <div class="card-body">
+                                              <h5 class="card-title">Room Type</h5>
+                                              <p class="card-text">View information about available room types in Faiq Hotel</p>
+                                              <a href="ClientController?command=View-Room-Page" class="btn btn-primary stretched-link">View Room Type</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      
                 
             </c:when>
             
@@ -181,7 +155,8 @@
 
                         <form action="${pageContext.request.contextPath}/ManageRoomController" method="post">
                           <div class="container pb-5">
-                              <div class="row align-items-start justify-content-center"><h1>Manage Room</h1></div>
+                              <div class="row align-items-start justify-content-center"><h1>Welcome Admin ${ADMIN.getName()}</h1></div>
+                              <div class="row align-items-start justify-content-center"><h3>Manage Room</h3></div>
                               <div class="row align-items-center pt-4">
                                   <div class="col">
                                       <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
