@@ -87,8 +87,16 @@
                                 
                                 <% int bookingID =((Booking)bookingList.get(i)).getBookingID();%>
                                 <td>
-                                        <a href="ManageBookingController?command=Check-In" class="btn btn-primary stretched-link">Check In</a>
-                                        <a href="ManageBookingController?command=Check-Out" class="btn btn-primary stretched-link">Check Out</a>
+                                    <form  name="viewBookRoom" action="${pageContext.request.contextPath}/ManageBookingController" method="post">
+                                        <label>       
+                                            <input type="hidden" name="bookingID" value=<%=bookingID %> >
+                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check-In">
+                                        </label> 
+                                        <label>
+                                            <input type="hidden" name="bookingID" value=<%=bookingID %> >
+                                            <input class="btn btn-danger btn-sm" type="submit" name="command" id="command" value="Check-Out">
+                                        </label>
+                                    </form>
                                 </td>
                             </tr>
                             

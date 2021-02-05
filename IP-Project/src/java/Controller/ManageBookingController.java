@@ -63,6 +63,7 @@ public class ManageBookingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
+        int bookingID;
         String command = request.getParameter("command");
         
         if(command==null){
@@ -81,8 +82,18 @@ public class ManageBookingController extends HttpServlet {
                     out.println("Invalid event!");
                 } 
                      break;                
-                
-
+                case "Check-In":
+                    bookingID=Integer.parseInt(request.getParameter("bookingID"));
+                    checkIn(bookingID,request,response);
+                    viewBookedRoom(request, response);
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
+                case "Check-Out":
+                    bookingID=Integer.parseInt(request.getParameter("bookingID"));
+                    checkOut(bookingID,request,response);
+                    viewBookedRoom(request, response);
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
                     
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -97,6 +108,7 @@ public class ManageBookingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
+        int bookingID;
         String command = request.getParameter("command");
         
         if(command==null){
@@ -114,15 +126,6 @@ public class ManageBookingController extends HttpServlet {
                     viewBookedRoom(request, response);
                     request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
                     break;
-                    
-                case "Check-In":
-                    checkIn(request,response);
-                    break;
-                    
-                case "Check-Out":
-                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
-                    break;
-                    
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
                    break;
@@ -176,26 +179,37 @@ public class ManageBookingController extends HttpServlet {
         
     }
     
-    public void checkIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void checkIn(int bookingID,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        String sqlStatement = "UPDATE booking SET status = ?";
+        String sqlStatement = "UPDATE booking SET status = ? WHERE bookingID = ?";
         
         try {
             PreparedStatement preparedStatementCheckIn = con.prepareStatement(sqlStatement);
             
             preparedStatementCheckIn.setString(1, "checkIn");
+            preparedStatementCheckIn.setInt(2, bookingID);
             preparedStatementCheckIn.executeUpdate();
             preparedStatementCheckIn.close();
-            
-            viewBookedRoom(request, response);
         }
         catch(SQLException ex) {
             System.out.println(ex.getMessage());
         } 
     }
     
-    public void checkOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void checkOut(int bookingID,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        String sqlStatement = "UPDATE booking SET status = 'Check Out'";
+        String sqlStatement = "UPDATE booking SET status = ? WHERE bookingID = ?";
+        
+        try {
+            PreparedStatement preparedStatementCheckIn = con.prepareStatement(sqlStatement);
+            
+            preparedStatementCheckIn.setString(1, "checkOut");
+            preparedStatementCheckIn.setInt(2, bookingID);
+            preparedStatementCheckIn.executeUpdate();
+            preparedStatementCheckIn.close();
+        }
+        catch(SQLException ex) {
+            System.out.println(ex.getMessage());
+        } 
     }
 }
