@@ -136,11 +136,11 @@ public class manageUserController extends HttpServlet {
         
          HttpSession session = request.getSession(false);
         if (session != null) {
+          
             session.invalidate();
-        
-            
             RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
             dispatcher.forward(request, response);
+            
         }
     }
 
@@ -225,15 +225,15 @@ public class manageUserController extends HttpServlet {
                       admin = null;
                       HttpSession session = request.getSession();
                       session.setAttribute("CLIENT", client);  
-                      destPage = "LoggedInIndex.jsp";
+                      destPage = "index.jsp";
                       RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
                       dispatcher.forward(request, response);
            }
            else if(admin != null){
-                        client = null;
+                      client = null;
                       HttpSession session = request.getSession();
                       session.setAttribute("ADMIN", admin);   
-                       destPage = "LoggedInIndex.jsp";
+                       destPage = "index.jsp";
                        RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
                       dispatcher.forward(request, response);
            }

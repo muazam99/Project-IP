@@ -100,42 +100,51 @@
     <body>
         
         <jsp:include page="headerNav.jsp" />
-        
+        <jsp:useBean id="user" class="Model.Client" scope="session" />
         <main role="main" class="container">
             <div class="row">      
                 <div class="card-body"> 
-                    <form action="editProfileController" method="POST" enctype="multipart/form-data">
+                    <form action="profileControl" method="POST" enctype="multipart/form-data">
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2"><h1>A</h1></th>
+                                    <th colspan="2"><img src="image/default.png"></th>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Upload new picture <br>
                                         <input type="file" name="file" size="60" /><br />
+                                        <input type="text" name="option" value="upload" hidden="hidden">
                                     </td>
                                 </tr>
-                                <tr><td colspan="2">Role : Admin</td></tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Upload">
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2">Role : <jsp:getProperty name="user" property="role"/></td></tr>
                             </thead>
+                    </form>
+                    <form action="profileControl" method="POST">
                             <tbody>
                                 <tr>
                                     <th>Name</th>
-                                    <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="John Doe" readonly></td>
+                                    <td><input type="text" class="form-control-plaintext input" name="name" id="name" value="<jsp:getProperty name="user" property="name"/>" readonly></td>
                                 </tr>
                                 <tr>
                                     <th>Email </th>
-                                    <td><input type="email" class="form-control input" name="email" id="email" value="JohnDoe@gmail.com" ></td>
+                                    <td><input type="email" class="form-control input" name="email" id="email" value="<jsp:getProperty name="user" property="email"/>" ></td>
                                 </tr>
                                 <tr>
                                     <th>Password</th>
-                                    <td><input type="password" class="form-control input" name="password" id="password" value="" /></td>
+                                    <td><input type="password" class="form-control input" name="password" id="password" value="<jsp:getProperty name="user" property="password"/>" /></td>
                                 </tr>
                                 <tr>
                                     <th>Phone No.</th>
-                                    <td><input type="text" class="form-control input" name="phone" id="phone" value="0123456789" /></td>
+                                    <td><input type="text" class="form-control input" name="phone" id="phone" value="<jsp:getProperty name="user" property="phoneNo"/>" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
+                                        <input type="text" name="option" value="edit" hidden="hidden">
                                         <a href="profile.jsp"><input type="button" value="Back"></a>
                                         <input type="submit" value="Submit">
                                     </td>
