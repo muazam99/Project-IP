@@ -200,7 +200,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">View Booked Room</h5>
                                                 <p class="card-text">To view booking table, check in and check out customer.<p>
-                                                <input type="submit" class="btn btn-outline-success btn-lg" id="command" name="command" value="View-Booking-Page" />
+                                                <a href="ManageBookingController?command=View-Booking-Page" class="btn btn-primary stretched-link">View Booking Table</a>
                                             </div>
                                         </div>
                                     </div>
