@@ -85,9 +85,6 @@
                              <input type="text" name="option" value="view" hidden="hidden">
                              <button type="submit">profile</button>
                          </form>
-                         
-                         <a href="profile.jsp"><button>profile page</button></a>
-                         
                   </div>
                </div>
                

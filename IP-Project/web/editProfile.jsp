@@ -104,7 +104,7 @@
         <main role="main" class="container">
             <div class="row">      
                 <div class="card-body"> 
-                    <form action="editProfileController" method="POST" enctype="multipart/form-data">
+                    <form action="profileControl" method="POST" enctype="multipart/form-data">
                         <table>
                             <thead>
                                 <tr>
@@ -113,10 +113,18 @@
                                 <tr>
                                     <td colspan="2">Upload new picture <br>
                                         <input type="file" name="file" size="60" /><br />
+                                        <input type="text" name="option" value="upload" hidden="hidden">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="Upload">
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">Role : <jsp:getProperty name="user" property="role"/></td></tr>
                             </thead>
+                    </form>
+                    <form action="profileControl" method="POST">
                             <tbody>
                                 <tr>
                                     <th>Name</th>
