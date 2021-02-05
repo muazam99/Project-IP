@@ -82,13 +82,7 @@ public class ManageBookingController extends HttpServlet {
                 } 
                      break;                
                 
-                case "Check In":
-                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
-                    break;
-                    
-                case "Check Out":
-                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
-                    break;
+
                     
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -118,6 +112,14 @@ public class ManageBookingController extends HttpServlet {
                                
                 case "View-Booking-Page":
                     viewBookedRoom(request, response);
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
+                    
+                case "Check-In":
+                    checkIn(request,response);
+                    break;
+                    
+                case "Check-Out":
                     request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
                     break;
                     
@@ -176,7 +178,20 @@ public class ManageBookingController extends HttpServlet {
     
     public void checkIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        String sqlStatement = "UPDATE booking SET status = 'Check In'";
+        String sqlStatement = "UPDATE booking SET status = ?";
+        
+        try {
+            PreparedStatement preparedStatementCheckIn = con.prepareStatement(sqlStatement);
+            
+            preparedStatementCheckIn.setString(1, "checkIn");
+            preparedStatementCheckIn.executeUpdate();
+            preparedStatementCheckIn.close();
+            
+            viewBookedRoom(request, response);
+        }
+        catch(SQLException ex) {
+            System.out.println(ex.getMessage());
+        } 
     }
     
     public void checkOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

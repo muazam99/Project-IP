@@ -87,15 +87,8 @@
                                 
                                 <% int bookingID =((Booking)bookingList.get(i)).getBookingID();%>
                                 <td>
-                                    <form  name="DeleteUpdateForm" action="${pageContext.request.contextPath}/ManageBookingController" method="post" enctype="multipart/form-data">
-                                        <label>
-                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check In">
-                                        </label>
-
-                                        <label>
-                                            <input class="btn btn-primary btn-sm" type="submit" name="command" id="command" value="Check Out">
-                                        </label>
-                                    </form>
+                                        <a href="ManageBookingController?command=Check-In" class="btn btn-primary stretched-link">Check In</a>
+                                        <a href="ManageBookingController?command=Check-Out" class="btn btn-primary stretched-link">Check Out</a>
                                 </td>
                             </tr>
                             
