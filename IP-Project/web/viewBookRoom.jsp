@@ -5,7 +5,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page language="java" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%!Booking booking = new Booking();%>
+
 
 <!DOCTYPE html>
 <html>
@@ -99,8 +99,11 @@
                                 </td>
                             </tr>
                             
+                            <% 
                                 }
-                        </tbody>                           
+                            %>
+                        </tbody>
+                </table>
             </div>
         
         </div>    
