@@ -58,10 +58,7 @@
                                                                        <input type="date" class="form-control" id="date_out" name="traveldateOut" min="<%=formattedDate%>">
                                                                    </td>
                                                                    <td>
-                                                                       <input type="number" class="form-control" id="guest_adult" name="guest_adult" min="1" max="5" value="2">
-                                                                   </td>
-                                                                   <td>
-                                                                       <input type="number" class="form-control" id="guest_child" name="guest_child" min="0" max="5" value="0">
+                                                                       <input type="number" class="form-control" id="guest_adult" name="guest_adult" min="1" max="4" value="1">
                                                                    </td>
                                                                    <td>
                                                                        <input type="submit" class="btn btn-primary" name="command" id="Search For Rooms" value="Search For Rooms">

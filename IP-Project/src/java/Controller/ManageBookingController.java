@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,9 @@ import Model.Booking;
 import Model.Room;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import jdbc.JDBCutility;
 /**
  *
@@ -24,10 +28,40 @@ import jdbc.JDBCutility;
 @WebServlet(name = "ManageBookingController", urlPatterns = {"/ManageBookingController"})
 public class ManageBookingController extends HttpServlet {
 
-    Booking booking=new Booking();
+    private JDBCutility jdbcUtility;   
+    private Connection con;
+
+    @Override
+    public void init() throws ServletException{
+        
+        String driver = "com.mysql.jdbc.Driver"; 
+        String dbName = "faiqhoteldb";
+        String url = "jdbc:mysql://localhost:3306/" + dbName + "?";
+        String userName = "root";
+        String password = "";
+
+        jdbcUtility = new JDBCutility(driver,
+                                      url,
+                                      userName,
+                                      password);
+
+        jdbcUtility.jdbcConnect();
+        
+        //get JDC connection
+        con = jdbcUtility.jdbcGetConnection();
+        
+        //prepare the statement once only
+        //for the entire servlet lifecycle
+        jdbcUtility.prepareSQLStatementRegister();
+             
+    }    
+    
+    
+    
+    Booking booking = new Booking();
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         
         String command = request.getParameter("command");
         
@@ -48,7 +82,18 @@ public class ManageBookingController extends HttpServlet {
                 } 
                      break;
                 
+                case "View-Booking-Page":
+                    viewBookedRoom(request, response);
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
                 
+                case "Check In":
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
+                    
+                case "Check Out":
+                    request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
+                    break;
                     
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -68,6 +113,48 @@ public class ManageBookingController extends HttpServlet {
         booking.searchAvailableRooms(traveldateIn, traveldateOut, request, response);
         
     }
+  
+    public void viewBookedRoom(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String sessionStatus = "";
+        HttpSession session = request.getSession();
+        
+        ArrayList<Booking> bookingList = new ArrayList<Booking>();
+        
+        try{
+            String viewBookRoom = "SELECT * FROM booking";
+            PreparedStatement preparedStatementViewBook = con.prepareStatement(viewBookRoom);
+            ResultSet rs = preparedStatementViewBook.executeQuery();
+            
+
+            while (rs.next()){
+                int bookingID         = rs.getInt("bookingID");
+                int roomID            = rs.getInt("roomID");
+                int clientID          = rs.getInt("clientID");
+                String bookingDateIn  = rs.getString("bookingDateIn");
+                String bookingDateOut = rs.getString("bookingDateOut");
+                String status         = rs.getString("status");
+                
+                bookingList.add(new Booking( bookingID, roomID, clientID, bookingDateIn, bookingDateOut, status));
+
+            }
+            
+            session.setAttribute("bookingList", bookingList);
+            preparedStatementViewBook.close();
+            
+        }
+        catch(SQLException e){
+                sessionStatus = "INVALID ACCOUNT";
+        }
+        
+    }
     
+    public void checkIn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String sqlStatement = "UPDATE booking SET status = 'Check In'";
+    }
     
+    public void checkOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String sqlStatement = "UPDATE booking SET status = 'Check Out'";
+    }
 }

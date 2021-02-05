@@ -37,7 +37,29 @@ public class Booking extends HttpServlet {
     private int clientID;
     private String bookingDateIn;
     private String bookingDateOut;
+    private String status;
 
+    public Booking() {
+    }
+
+    public Booking(int bookingID, int roomID, int clientID, String bookingDateIn, String bookingDateOut, String status) {
+        this.bookingID = bookingID;
+        this.roomID = roomID;
+        this.clientID = clientID;
+        this.bookingDateIn = bookingDateIn;
+        this.bookingDateOut = bookingDateOut;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
     public int getBookingID() {
         return bookingID;
     }
