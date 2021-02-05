@@ -4,7 +4,9 @@
     Author     : Muaz Amir
 --%>
 
-       <%--  <jsp:useBean id="user" type="Model.User" scope="session" />--%>
+       <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--  <jsp:useBean id="user" type="Model.User" scope="session" />--%>
 
        <head>
                  <!-- Custom styles for this template -->
@@ -39,20 +41,22 @@
                     <a class="nav-link" href="javascript:;">About us</a>
                   </li>
                   
-                  <%-- 
-                  <%    if(user.getRole().equalsIgnoreCase("ADMIN")) { %>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="javascript:;">Manage Room</a>
-                  </li>
-                 <%  } %>
-                 
-                 <%    if(user.getRole().equalsIgnoreCase("CLIENT")) { %>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="javascript:;">My Booking</a>
-                  </li>
-                 <%  } %>
-                  --%>
-                 
+                
+                  <c:choose>
+                      <c:when test="${ADMIN != null}">
+                          <li class="nav-item active">
+                             <a class="nav-link" href="javascript:;">Manage Room</a>
+                        </li>
+                      </c:when>
+                        
+                        <c:when test="${CLIENT  != null}">
+                          <li class="nav-item active">
+                             <a class="nav-link" href="javascript:;">View Room</a>
+                        </li>
+                       </c:when>
+                                            
+                  </c:choose>
+                  
                  
                </ul>
                   
@@ -63,23 +67,41 @@
                          
                     
                    
-                   <div class="offset-md-3">
-                  <li class="nav-item">
-                         <a href="NavBarController?command=Register-Page" class="btn btn-light" role="button" data-bs-toggle="button">Register</a>
-                  </li>  
-                   </div>
                   
-                   <div class="offset-md-2">
-                  <li class="nav-item">
-                    <a href="NavBarController?command=Login-Page" class="btn btn-dark" role="button" data-bs-toggle="button">Login</a>
-                  </li>
-                  </div>  
-             
-                <div class="offset-md-3">
-                       <li class="nav-item">
-                         <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>
-                      </li>  
-                  </div>
+                   
+                    <c:choose>
+                      <c:when test="${ADMIN != null}">
+                          <div class="offset-md-3">
+                                <li class="nav-item">
+                                  <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>
+                               </li>  
+                           </div>
+                      </c:when>
+                        
+                        <c:when test="${CLIENT  != null}">
+                         <div class="offset-md-3">
+                                <li class="nav-item">
+                                  <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>
+                               </li>  
+                          </div>
+                       </c:when>
+                      
+                        <c:otherwise>
+                             <div class="offset-md-3">
+                                    <li class="nav-item">
+                                           <a href="NavBarController?command=Register-Page" class="btn btn-light" role="button" data-bs-toggle="button">Register</a>
+                                    </li>  
+                             </div>
+
+                              <div class="offset-md-2">
+                                    <li class="nav-item">
+                                      <a href="NavBarController?command=Login-Page" class="btn btn-dark" role="button" data-bs-toggle="button">Login</a>
+                                    </li>
+                             </div>  
+                        </c:otherwise>
+                        
+                  </c:choose>
+          
                </ul>
                   
                   

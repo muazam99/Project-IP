@@ -172,6 +172,9 @@ public class JDBCutility {
                 client.setEmail(email);
                 client.setRole(result.getString("role"));
             }
+            else{
+                client = null;
+            }
              con.close();       
             return client;  
             }
@@ -200,6 +203,8 @@ public class JDBCutility {
                 admin.setName(result.getString("name"));
                 admin.setEmail(email);
                 admin.setRole(result.getString("role"));
+            }else{
+                admin = null;
             }
              con.close();      
             return admin;  
