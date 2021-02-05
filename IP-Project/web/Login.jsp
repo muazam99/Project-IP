@@ -81,10 +81,6 @@
                          <button type="submit" class="btn btn-primary">Login</button> Dont have an account yet? 
                            <a href="NavBarController?command=Register-Page"><button type="button" class="btn btn-danger" >Sign Up</button></a>
                      </form>
-                         <form action="profileControl" method="POST">
-                             <input type="text" name="option" value="view" hidden="hidden">
-                             <button type="submit">profile</button>
-                         </form>
                   </div>
                </div>
                

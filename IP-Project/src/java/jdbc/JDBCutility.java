@@ -168,6 +168,7 @@ public class JDBCutility {
             
             if(result.next()){
                  client =  new Client();
+                client.setID(result.getString("clientID"));
                 client.setName(result.getString("name"));
                 client.setEmail(email);
                 client.setRole(result.getString("role"));
@@ -200,6 +201,7 @@ public class JDBCutility {
             
             if(result.next()){
                 admin = new Admin();
+                admin.setID(result.getString("adminID"));
                 admin.setName(result.getString("name"));
                 admin.setEmail(email);
                 admin.setRole(result.getString("role"));

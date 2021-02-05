@@ -6,7 +6,6 @@
 package Controller;
 
 import Model.Client;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -30,22 +29,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  *
  * @author hafizul
  */
-@WebServlet(name = "profileControl", urlPatterns = {"/profileControl"})
-public class profileControl extends HttpServlet {
+@WebServlet(name = "ClientProfileController", urlPatterns = {"/ClientProfileController"})
+public class ClientProfileController extends HttpServlet {
     
     private JDBCutility jdbcUtility;   
     private Connection con;
-    
-    private static final long serialVersionUID = 1L;
-     
-    // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "img";
- 
-    // upload settings
-    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB 
-    
     
     @Override
     public void init() throws ServletException{
@@ -86,6 +74,7 @@ public class profileControl extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
+        
         String option = request.getParameter("option");
         
         if(option == null){
@@ -101,10 +90,6 @@ public class profileControl extends HttpServlet {
                 editProfile(request , response);
                 break;
                 
-            case "upload" :
-                uploadProfile(request , response);
-                break;
-                
             default :
                 viewProfile(request , response);
                 break;
@@ -115,41 +100,41 @@ public class profileControl extends HttpServlet {
     public void viewProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
         String status = "";
-        HttpSession session = request.getSession();
-        
+        String userID = request.getParameter("id");
         try{
-            String viewProfile = "SELECT * FROM user WHERE userID = 1 ";
+                HttpSession session = request.getSession();
+                Client client = new Client();
+                
+                String viewProfile = "SELECT * FROM client WHERE clientID =" + userID ;
                 PreparedStatement preparedStatement = con.prepareStatement(viewProfile);
 
                 ResultSet rs = preparedStatement.executeQuery();
 
-                Client c = new Client();
-
                 while(rs.next()){
-                    String userID = String.valueOf(rs.getInt("userID"));
                     String name = rs.getString("name");
                     String password = rs.getString("password");
                     String email = rs.getString("email");
                     String phone = rs.getString("phoneNo");
                     String role = rs.getString("role");
                     
-                    c.setID(userID);
-                    c.setName(name);
-                    c.setPassword(password);
-                    c.setEmail(email);
-                    c.setPhoneNo(phone);
-                    c.setRole(role);
+                    client.setName(name);
+                    client.setPassword(password);
+                    client.setEmail(email);
+                    client.setPhoneNo(phone);
+                    client.setRole(role);
 
-                    session.setAttribute("user", c);
+                    session.setAttribute("user", client);
                     status = "SUCCESS";
                 }
+            
+            
             }catch(SQLException e){
                 status = "INVALID ACCOUNT";
             }  
             
             if(status.equals("SUCCESS"))   //On success, you can display a message to user on Home page
             {
-                request.getRequestDispatcher("/profile.jsp").forward(request, response);
+                request.getRequestDispatcher("/clientProfile.jsp").forward(request, response);
             }
             else
             {
@@ -160,15 +145,16 @@ public class profileControl extends HttpServlet {
           
     public void editProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         
-        Client c = new Client();
+        Client client = new Client();
         String status = "";
         PreparedStatement psEdit = null;
+        String userID = request.getParameter("id");
+        
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         
-        String userID = c.getID();
-        String editProfile = "UPDATE user SET password = ?, email = ?, phoneNo = ? WHERE userID = 1";
+        String editProfile = "UPDATE client SET password = ?, email = ?, phoneNo = ? WHERE clientID = "+ userID;
         
         try{
             
@@ -208,84 +194,5 @@ public class profileControl extends HttpServlet {
         }
         
     }
-
-    public void uploadProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-
-        response.setContentType("text/html;charset=UTF-8");        
-
-        // checks if the request actually contains upload file
-        if (!ServletFileUpload.isMultipartContent(request)) {
-            // if not, we stop here
-            PrintWriter writer = response.getWriter();
-            writer.println("Error: Form must has enctype=multipart/form-data.");
-            writer.flush();
-            return;
-        }
-
-        // configures upload settings
-        DiskFileItemFactory factory = new DiskFileItemFactory();
-        // sets memory threshold - beyond which files are stored in disk
-        factory.setSizeThreshold(MEMORY_THRESHOLD);
-        // sets temporary location to store files
-        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        
-        // sets maximum size of upload file
-        upload.setFileSizeMax(MAX_FILE_SIZE);
-         
-        // sets maximum size of request (include file + form data)
-        upload.setSizeMax(MAX_REQUEST_SIZE);
- 
-        // constructs the directory path to store upload file
-        // this path is relative to application's directory
-        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;        
-       
-        // creates the directory if it does not exist
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
-
-        String fileName = "";   
-        String extension = "";
-        String fullname = "";
-        try {
-            // parses the request's content to extract file data
-            @SuppressWarnings("unchecked")
-            List<FileItem> formItems = upload.parseRequest(request);
- 
-            if (formItems != null && formItems.size() > 0) {
-                // iterates over form's fields
-                for (FileItem item : formItems) {
-                    // processes file form field
-                    if (!item.isFormField()) {
-                        fileName = new File(item.getName()).getName();
-                        String filePath = uploadPath + File.separator + fileName;
-                        File storeFile = new File(filePath);
-                        
-                        int index = fileName.lastIndexOf(".");                        
-                        if(index > 0){
-                            extension = fileName.substring(index+1);
-                            extension = extension.toLowerCase();
-                        }
- 
-                        // saves the file on disk
-                        item.write(storeFile);
-                    } else {
-                        //process text form field
-                        String field = item.getFieldName();
-                        
-                        if (field.equals("fullname")) {
-                            fullname = item.getString();
-                        }
-                    }
-                }
-            }
-            request.getRequestDispatcher("/profileControl?option=view'").forward(request, response);
-        } catch (Exception ex) {
-        }
-                
-
-    }
+          
 }

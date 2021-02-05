@@ -47,11 +47,24 @@
                           <li class="nav-item active">
                              <a class="nav-link" href="javascript:;">Manage Room</a>
                         </li>
+                        <li>
+                            <form action="AdminProfileController" method="POST">
+                                <input type="text" name="id" value="${ADMIN.getID()}" hidden="hidden">
+                                 <input type="text" name="option" value="view" hidden="hidden">
+                                 <button type="submit">profile</button>
+                            </form>
+                        </li>
                       </c:when>
                         
                         <c:when test="${CLIENT  != null}">
                           <li class="nav-item active">
                              <a class="nav-link" href="javascript:;">View Room</a>
+                        </li>
+                        <li>
+                            <form action="ClientProfileController" method="POST">
+                                 <input type="text" name="option" value="view" hidden="hidden">
+                                 <button type="submit">profile</button>
+                            </form>
                         </li>
                        </c:when>
                                             
