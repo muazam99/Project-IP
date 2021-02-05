@@ -39,7 +39,7 @@ public class profileControl extends HttpServlet {
     private static final long serialVersionUID = 1L;
      
     // location to store file uploaded
-    private static final String UPLOAD_DIRECTORY = "image";
+    private static final String UPLOAD_DIRECTORY = "img";
  
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
@@ -210,78 +210,82 @@ public class profileControl extends HttpServlet {
     }
 
     public void uploadProfile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+
+        response.setContentType("text/html;charset=UTF-8");        
+
+        // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
-                // if not, we stop here
-                PrintWriter writer = response.getWriter();
-                writer.println("Error: Form must has enctype=multipart/form-data.");
-                writer.flush();
-                return;
+            // if not, we stop here
+            PrintWriter writer = response.getWriter();
+            writer.println("Error: Form must has enctype=multipart/form-data.");
+            writer.flush();
+            return;
         }
-        
+
         // configures upload settings
-            DiskFileItemFactory factory = new DiskFileItemFactory();
-            // sets memory threshold - beyond which files are stored in disk
-            factory.setSizeThreshold(MEMORY_THRESHOLD);
-            // sets temporary location to store files
-            factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        // sets memory threshold - beyond which files are stored in disk
+        factory.setSizeThreshold(MEMORY_THRESHOLD);
+        // sets temporary location to store files
+        factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
 
-            ServletFileUpload upload = new ServletFileUpload(factory);
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        
+        // sets maximum size of upload file
+        upload.setFileSizeMax(MAX_FILE_SIZE);
+         
+        // sets maximum size of request (include file + form data)
+        upload.setSizeMax(MAX_REQUEST_SIZE);
+ 
+        // constructs the directory path to store upload file
+        // this path is relative to application's directory
+        String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;        
+       
+        // creates the directory if it does not exist
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
 
-            // sets maximum size of upload file
-            upload.setFileSizeMax(MAX_FILE_SIZE);
-
-            // sets maximum size of request (include file + form data)
-            upload.setSizeMax(MAX_REQUEST_SIZE);
-
-            // constructs the directory path to store upload file
-            // this path is relative to application's directory
-            String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
-            
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
-            
-            String fileName = "";   
-            String extension = "";
-            String fullname = "";
-            try {
-                // parses the request's content to extract file data
-                @SuppressWarnings("unchecked")
-                List<FileItem> formItems = upload.parseRequest(request);
-
-                if (formItems != null && formItems.size() > 0) {
-                    // iterates over form's fields
-                    for (FileItem item : formItems) {
-                        // processes file form field
-                        if (!item.isFormField()) {
-                            fileName = new File(item.getName()).getName();
-                            String filePath = uploadPath + File.separator + fileName;
-                            File storeFile = new File(filePath);
-
-                            int index = fileName.lastIndexOf(".");                        
-                            if(index > 0){
-                                extension = fileName.substring(index+1);
-                                extension = extension.toLowerCase();
-                            }
-
-                            // saves the file on disk
-                            item.write(storeFile);
-                        } else {
-                            //process text form field
-                            String field = item.getFieldName();
-
-                            if (field.equals("fullname")) {
-                                fullname = item.getString();
-                            }
+        String fileName = "";   
+        String extension = "";
+        String fullname = "";
+        try {
+            // parses the request's content to extract file data
+            @SuppressWarnings("unchecked")
+            List<FileItem> formItems = upload.parseRequest(request);
+ 
+            if (formItems != null && formItems.size() > 0) {
+                // iterates over form's fields
+                for (FileItem item : formItems) {
+                    // processes file form field
+                    if (!item.isFormField()) {
+                        fileName = new File(item.getName()).getName();
+                        String filePath = uploadPath + File.separator + fileName;
+                        File storeFile = new File(filePath);
+                        
+                        int index = fileName.lastIndexOf(".");                        
+                        if(index > 0){
+                            extension = fileName.substring(index+1);
+                            extension = extension.toLowerCase();
+                        }
+ 
+                        // saves the file on disk
+                        item.write(storeFile);
+                    } else {
+                        //process text form field
+                        String field = item.getFieldName();
+                        
+                        if (field.equals("fullname")) {
+                            fullname = item.getString();
                         }
                     }
                 }
-                
-                request.getRequestDispatcher("/profileControl?option=view'").forward(request, response);
-
-            } 
-            catch (Exception ex) {
             }
+            request.getRequestDispatcher("/profileControl?option=view'").forward(request, response);
+        } catch (Exception ex) {
+        }
+                
+
     }
 }
