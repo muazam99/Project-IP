@@ -14,7 +14,9 @@
                 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"    rel="stylesheet">
                 <script src="https://kit.fontawesome.com/4962701fb8.js" crossorigin="anonymous"></script>
               <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+                <!-- Bootstrap core CSS -->
+                <link href="css/bootstrap.min.css" rel="stylesheet">
+               
        </head>      
        
  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
@@ -47,30 +49,14 @@
                           <li class="nav-item active">
                              <a class="nav-link" href="javascript:;">Manage Room</a>
                         </li>
-                        <li>
-                            <form action="ProfileController" method="POST">
-                                <input type="text" name="id" value="${ADMIN.getID()}" hidden="hidden">
-                                <input type="text" name="role" value="${ADMIN.getRole()}" hidden="hidden">
-                                 <input type="text" name="option" value="view" hidden="hidden">
-                                 <button type="submit">profile</button>
-                            </form>
-                        </li>
+                       
                       </c:when>
                         
                         <c:when test="${CLIENT  != null}">
-                          <li class="nav-item active">
-                             <a class="nav-link" href="javascript:;">View Room</a>
-                        </li>
-                        <li>
-                            <form action="ProfileController" method="POST">
-                                <input type="text" name="id" value="${CLIENT.getID()}" hidden="hidden">
-                                <input type="text" name="role" value="${CLIENT.getRole()}" hidden="hidden">
-                                 <input type="text" name="option" value="view" hidden="hidden">
-                                 <button type="submit">profile</button>
-                            </form>
-                        </li>
-                       </c:when>
-                                            
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="javascript:;">View Room</a>
+                               </li>
+                         </c:when>                   
                   </c:choose>
                   
                  
@@ -87,14 +73,39 @@
                    
                     <c:choose>
                       <c:when test="${ADMIN != null}">
+                         
+                       <div class="offset-md-3"> 
+                          <li>
+                             <form action="ProfileController" method="POST">
+                                 <input type="text" name="id" value="${ADMIN.getID()}" hidden="hidden">
+                                 <input type="text" name="role" value="${ADMIN.getRole()}" hidden="hidden">
+                                  <input type="text" name="option" value="view" hidden="hidden">
+                                  <input type="submit" class="btn btn-success" value="My Profile"></button>
+                             </form>
+                           </li>
+                        </div>  
+                                  
                           <div class="offset-md-3">
                                 <li class="nav-item">
-                                  <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>
+                                  <a href="manageUserController?command=Logout" class="btn btn-danger" role="button" data-bs-toggle="button">Logout</a>
                                </li>  
                            </div>
+  
                       </c:when>
                         
                         <c:when test="${CLIENT  != null}">
+                         
+                        <div class="offset-md-3"> 
+                          <li>
+                             <form action="ProfileController" method="POST">
+                                <input type="text" name="id" value="${CLIENT.getID()}" hidden="hidden">
+                                <input type="text" name="role" value="${CLIENT.getRole()}" hidden="hidden">
+                                  <input type="text" name="option" value="view" hidden="hidden">
+                                  <input type="submit" class="btn btn-success" value="My Profile"></button>
+                             </form>
+                           </li>
+                        </div>  
+                            
                          <div class="offset-md-3">
                                 <li class="nav-item">
                                   <a href="manageUserController?command=Logout" class="btn btn-secondary" role="button" data-bs-toggle="button">Logout</a>

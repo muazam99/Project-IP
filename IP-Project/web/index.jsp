@@ -162,7 +162,7 @@
                                 <div class="row align-items-center pt-4">
                                   
                                     <div class="col">
-                                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                        <div class="card p-1 mb-2 bg-light text-dark" style="width: 18rem;">
                                             <img src="image/cover.png" class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h5 class="card-title">Add New Room</h5>
@@ -173,7 +173,7 @@
                                     </div>
                                   
                                     <div class="col">
-                                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                        <div class="card p-1 mb-2 bg-light text-dark" style="width: 18rem;">
                                             <img src="image/cover.png" class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h5 class="card-title">Deleting Room</h5>
@@ -184,7 +184,7 @@
                                     </div>
                                   
                                     <div class="col">
-                                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                        <div class="card p-1 mb-2 bg-light text-dark" style="width: 18rem;">
                                             <img src="image/cover.png" class="card-img-top" alt="...">
                                             <div class="card-body">
                                                 <h5 class="card-title">Updating Room</h5>
@@ -195,7 +195,8 @@
                                     </div>
                                   
                                     <div class ="col">
-                                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                                      <div class="row align-items-start justify-content-center">
+                                        <div class="card p-1 mb-2 bg-light text-dark" style="width: 18rem;">
                                             <img src="image/cover.png" class="card-img-top" alt="...">                                        
                                             <div class="card-body">
                                                 <h5 class="card-title">View Booked Room</h5>
@@ -203,6 +204,7 @@
                                                 <a href="ManageBookingController?command=View-Booking-Page" class="btn btn-primary stretched-link">View Booking Table</a>
                                             </div>
                                         </div>
+                                     </div>
                                     </div>
                                     
                               </div>
