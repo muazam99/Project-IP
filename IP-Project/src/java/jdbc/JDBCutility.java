@@ -170,6 +170,7 @@ public class JDBCutility {
                  client =  new Client();
                 client.setID(result.getString("clientID"));
                 client.setName(result.getString("name"));
+                client.setPhoneNo(result.getString("phoneNo"));
                 client.setEmail(email);
                 client.setRole(result.getString("role"));
             }

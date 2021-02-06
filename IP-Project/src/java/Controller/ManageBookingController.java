@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Model.*;
-import Model.*;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,6 +28,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.Part;
 import jdbc.JDBCutility;
 /**
  *
@@ -72,10 +73,10 @@ public class ManageBookingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
-        int bookingID,guest_adult;
-        String traveldateIn,traveldateOut,roomType;
+        int bookingID,guest_adult,clientID;
+        String traveldateIn,traveldateOut,roomType,clientName,clientEmail,clientPhoneNo;
         String command = request.getParameter("command");
-        
+        double totalPrice;
         if(command==null){
             command="";
         }
@@ -117,7 +118,20 @@ public class ManageBookingController extends HttpServlet {
                     roomType = request.getParameter("roomType");
                     traveldateIn = request.getParameter("traveldateIn");
                     traveldateOut = request.getParameter("traveldateOut");
+                    displayBookInfo(roomType, traveldateIn,  traveldateOut,request,response);
+                    request.getRequestDispatcher("paymentAfterBook.jsp").forward(request, response);
+                    break;
+                case "Payment":
+                    roomType = request.getParameter("roomType");
+                    traveldateIn = request.getParameter("traveldateIn");
+                    traveldateOut = request.getParameter("traveldateOut");
+                    totalPrice= Double.parseDouble(request.getParameter("totalPrice"));
+                    clientID = Integer.parseInt(request.getParameter("clientID"));
+                    Part part = request.getPart("bookImgProofImage");
+                    InputStream bookImgProofImage = part.getInputStream();
                     assignRoom(roomType,traveldateIn,traveldateOut,request,response);
+                    bookingID=searchBookingID( roomType, traveldateIn,  traveldateOut, request,  response);
+                    payment(clientID,bookingID,bookImgProofImage,totalPrice,request,response);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                     break;
                     
@@ -436,20 +450,16 @@ public class ManageBookingController extends HttpServlet {
                 if (preparedStatementInsert != null)
                 {
                     //insertSuccess = true;
-                    try(PrintWriter out = response.getWriter()){
-                        out.println("<script>");
-                        out.println("  alert('Register Success');");
-                        out.println("</script>");
-                        
-                     }  
+                     
                 } 
                 else
                 {
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("NOSUCCESS!");
-                    } 
-                    String message = "Data added unsuccessful";
-                    session.setAttribute("alertMsg", message);
+                    try(PrintWriter out = response.getWriter()){
+                    out.println("<script>");
+                    out.println("  alert('Register Not Success');");
+                    out.println("</script>");
+
+                 }  
                 }
             }
             catch(SQLException ex) {
@@ -480,20 +490,16 @@ public class ManageBookingController extends HttpServlet {
                 if (preparedStatementInsert != null)
                 {
                     //insertSuccess = true;
-                    try(PrintWriter out = response.getWriter()){
-                        out.println("<script>");
-                        out.println("  alert('Register Success');");
-                        out.println("</script>");
-                        
-                     }  
+                      
                 } 
                 else
                 {
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("NOSUCCESS!");
-                    } 
-                    String message = "Data added unsuccessful";
-                    session.setAttribute("alertMsg", message);
+                    try(PrintWriter out = response.getWriter()){
+                    out.println("<script>");
+                    out.println("  alert('Register Not Success');");
+                    out.println("</script>");
+
+                 }  
                 }
             }
             catch(SQLException ex) {
@@ -524,20 +530,16 @@ public class ManageBookingController extends HttpServlet {
                 if (preparedStatementInsert != null)
                 {
                     //insertSuccess = true;
-                    try(PrintWriter out = response.getWriter()){
-                        out.println("<script>");
-                        out.println("  alert('Register Success');");
-                        out.println("</script>");
-                        
-                     }  
+                     
                 } 
                 else
                 {
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("NOSUCCESS!");
-                    } 
-                    String message = "Data added unsuccessful";
-                    session.setAttribute("alertMsg", message);
+                    try(PrintWriter out = response.getWriter()){
+                    out.println("<script>");
+                    out.println("  alert('Register Not Success');");
+                    out.println("</script>");
+
+                 }  
                 }
             }
             catch(SQLException ex) {
@@ -568,20 +570,16 @@ public class ManageBookingController extends HttpServlet {
                 if (preparedStatementInsert != null)
                 {
                     //insertSuccess = true;
-                    try(PrintWriter out = response.getWriter()){
-                        out.println("<script>");
-                        out.println("  alert('Register Success');");
-                        out.println("</script>");
-                        
-                     }  
+                    
                 } 
                 else
                 {
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("NOSUCCESS!");
-                    } 
-                    String message = "Data added unsuccessful";
-                    session.setAttribute("alertMsg", message);
+                    try(PrintWriter out = response.getWriter()){
+                    out.println("<script>");
+                    out.println("  alert('Register Not Success');");
+                    out.println("</script>");
+
+                 }  
                 }
             }
             catch(SQLException ex) {
@@ -644,6 +642,104 @@ public class ManageBookingController extends HttpServlet {
         session.setAttribute("traveldateIn", traveldateIn);
         session.setAttribute("traveldateOut", traveldateOut);
         session.setAttribute("datediff", datediff);
+    }
+    
+    public int searchBookingID(String roomType,String traveldateIn, String traveldateOut,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Client client = (Client)session.getAttribute("CLIENT");
+        int clientID = Integer.parseInt(client.getID());
+        int roomID=-1;
+        int i=0;
+        ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
+        ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
+        ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
+        ArrayList<Room> roomQuadAvailable = (ArrayList<Room>)session.getAttribute("roomQuadAvailable");
+        
+        if(roomType.equals("Single"))
+        {
+            roomID=((Room)roomSingleAvailable.get(i)).getRoomID();
+        }
+        else if(roomType.equals("Double"))
+        {
+            roomID=((Room)roomDoubleAvailable.get(i)).getRoomID();
+        }
+        else if(roomType.equals("Triple"))
+        {
+            roomID=((Room)roomTripleAvailable.get(i)).getRoomID();
+        }
+        else if(roomType.equals("Quad"))
+        {
+            roomID=((Room)roomQuadAvailable.get(i)).getRoomID();
+        }
+        int bookingID=-1;
+        String sqlStatement ="SELECT bookingID FROM booking WHERE bookingDateIn = ? AND bookingDateOut = ? AND clientID = ? AND roomID = ?";
+        ArrayList<Integer> roomIDBookedList = new ArrayList<Integer>();
+        Date sqltraveldateIn=Date.valueOf(traveldateIn);
+        Date sqltraveldateOut=Date.valueOf(traveldateOut);
+        try {
+                 
+                PreparedStatement preparedStatementInsert  = con.prepareStatement(sqlStatement);
+                preparedStatementInsert.setDate(1, sqltraveldateIn);
+                preparedStatementInsert.setDate(2, sqltraveldateOut);
+                preparedStatementInsert.setInt(3, clientID);
+                preparedStatementInsert.setInt(4, roomID);
+                
+                ResultSet rs = preparedStatementInsert.executeQuery();
+                
+                while(rs.next())
+                {
+                    bookingID = rs.getInt("bookingID");
+                         
+                }
+                       // session.setAttribute("roomIDList", roomIDList);
+                        preparedStatementInsert.close();  
+            }
+            catch(SQLException ex) {
+                System.out.println(ex.getMessage());
+            } 
+            catch (NullPointerException e) {
+                try (PrintWriter out = response.getWriter()) {
+                        out.println("SUCCESS!");
+                    } 
+            }
+        
+        
+        
+        return bookingID;
+    }
+    
+    public void payment(int clientID,int bookingID,InputStream bookImgProofImage, double totalPrice,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String sqlStatement = "INSERT INTO payment(clientID, bookingID, bookImgProofImage, totalPrice) VALUES(?, ?, ?, ?)";
+        boolean insertSuccess = false;
+        try 
+        {
+            //InputStream eventImage = part.getInputStream();
+            PreparedStatement preparedStatementInsert = con.prepareStatement(sqlStatement);
+
+
+            preparedStatementInsert.setInt(1, clientID);
+            preparedStatementInsert.setInt(2, bookingID);
+            preparedStatementInsert.setBlob(3, bookImgProofImage);
+            preparedStatementInsert.setDouble(4, totalPrice);
+
+            // execute insert SQL stetement
+            preparedStatementInsert.executeUpdate();
+            preparedStatementInsert.close();
+
+            if (preparedStatementInsert != null)
+            {
+                //insertSuccess = true;
+                 
+            } 
+            else
+            {
+                
+            }
+        }
+        catch(SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
 }
