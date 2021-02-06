@@ -15,6 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+         <jsp:include page="headerNav.jsp" /> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Update & Delete Room</title>
         <link rel='stylesheet' href='style.css'/>

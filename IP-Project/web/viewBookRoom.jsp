@@ -45,6 +45,8 @@
     </head>
     <body>
         
+         <jsp:include page="headerNav.jsp" />  
+        
         <%
             Booking booking = new Booking();
             ArrayList<Booking> bookingList = (ArrayList<Booking>)session.getAttribute("bookingList");

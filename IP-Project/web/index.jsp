@@ -225,7 +225,7 @@
                           <div class="centered" style="color:white;"><h1 class="display-3" >
                                   <b>Welcome to Faiq Hotel</b></h1>
                                   <p>
-                             Find deals on hotels, home and much more....
+                             Please Login to proceed
                                   </p>
 
 
