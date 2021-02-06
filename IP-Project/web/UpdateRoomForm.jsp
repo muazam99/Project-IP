@@ -27,6 +27,7 @@
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
+         <jsp:include page="headerNav.jsp" /> 
         <%
             ArrayList<Room> updateroomlist = (ArrayList<Room>)session.getAttribute("updateroomlist");
             int i=0,k=0;

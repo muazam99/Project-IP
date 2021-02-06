@@ -20,6 +20,8 @@
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
     <body>
+      
+         <jsp:include page="headerNav.jsp" /> 
         
         <form  name="AddRoomform" method="post" action="ManageRoomController" enctype="multipart/form-data">
             

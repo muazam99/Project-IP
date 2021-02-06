@@ -18,6 +18,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+         <jsp:include page="headerNav.jsp" /> 
         
         <%ArrayList<Room> roomAvailable = (ArrayList<Room>)session.getAttribute("roomAvailable");%>
         
