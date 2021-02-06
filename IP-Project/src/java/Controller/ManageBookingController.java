@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Model.Booking;
-import Model.Room;
+import Model.*;
+import Model.*;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Date;
@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Locale;
 import javax.servlet.annotation.MultipartConfig;
@@ -72,7 +73,7 @@ public class ManageBookingController extends HttpServlet {
     throws ServletException, IOException {
         
         int bookingID,guest_adult;
-        String traveldateIn,traveldateOut;
+        String traveldateIn,traveldateOut,roomType;
         String command = request.getParameter("command");
         
         if(command==null){
@@ -105,9 +106,23 @@ public class ManageBookingController extends HttpServlet {
                     viewBookedRoom(request, response);
                     request.getRequestDispatcher("viewBookRoom.jsp").forward(request, response);
                     break;
+                case "Book Room":
+                    roomType = request.getParameter("roomType");
+                    traveldateIn = request.getParameter("traveldateIn");
+                    traveldateOut = request.getParameter("traveldateOut");
+                    displayBookInfo(roomType, traveldateIn,  traveldateOut,request,response);
+                    request.getRequestDispatcher("displayBookInfoBefore.jsp").forward(request, response);
+                    break;
+                case "Book Room Confirm":
+                    roomType = request.getParameter("roomType");
+                    traveldateIn = request.getParameter("traveldateIn");
+                    traveldateOut = request.getParameter("traveldateOut");
+                    assignRoom(roomType,traveldateIn,traveldateOut,request,response);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    break;
                     
                 default :
-                   //request.getRequestDispatcher("index.jsp").forward(request, response);
+                   request.getRequestDispatcher("index.jsp").forward(request, response);
                    break;
             }
         }catch (Exception exc) {
@@ -230,6 +245,8 @@ public class ManageBookingController extends HttpServlet {
         String sqlStatement ="SELECT roomID FROM booking WHERE bookingDateIn >= ? AND bookingDateOut <= ?";
         HttpSession session = request.getSession();
         session.setAttribute("guest_adult", guest_adult);
+        session.setAttribute("traveldateIn", traveldateIn);
+        session.setAttribute("traveldateOut", traveldateOut);
         ArrayList<Integer> roomIDBookedList = new ArrayList<Integer>();
         
         try {
@@ -384,4 +401,249 @@ public class ManageBookingController extends HttpServlet {
         }
         
     }
+    public void assignRoom(String roomType,String traveldateIn,String traveldateOut,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String sessionStatus = "";
+        HttpSession session = request.getSession();
+        int i=0;
+        int roomID;
+        ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
+        ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
+        ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
+        ArrayList<Room> roomQuadAvailable = (ArrayList<Room>)session.getAttribute("roomQuadAvailable");
+        Client client = (Client)session.getAttribute("CLIENT");
+        int clientID = Integer.parseInt(client.getID());
+        if(roomType.equals("Single"))
+        {
+            roomID=((Room)roomSingleAvailable.get(i)).getRoomID();
+            String sqlStatement = "INSERT INTO booking(roomID, clientID, bookingDateIn, bookingDateOut, status) VALUES(?, ?, ?, ?, ?)";
+            boolean insertSuccess = false;
+            try 
+            {
+                //InputStream eventImage = part.getInputStream();
+                PreparedStatement preparedStatementInsert = con.prepareStatement(sqlStatement);
+
+
+                preparedStatementInsert.setInt(1, roomID);
+                preparedStatementInsert.setInt(2, clientID);
+                preparedStatementInsert.setString(3, traveldateIn);
+                preparedStatementInsert.setString(4, traveldateOut);
+                preparedStatementInsert.setString(5, "Booked");
+                
+                // execute insert SQL stetement
+                preparedStatementInsert.executeUpdate();
+                preparedStatementInsert.close();
+
+                if (preparedStatementInsert != null)
+                {
+                    //insertSuccess = true;
+                    try(PrintWriter out = response.getWriter()){
+                        out.println("<script>");
+                        out.println("  alert('Register Success');");
+                        out.println("</script>");
+                        
+                     }  
+                } 
+                else
+                {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("NOSUCCESS!");
+                    } 
+                    String message = "Data added unsuccessful";
+                    session.setAttribute("alertMsg", message);
+                }
+            }
+            catch(SQLException ex) {
+                System.out.println(ex.getMessage());
+            }  
+        }
+        else if(roomType.equals("Double"))
+        {
+            roomID=((Room)roomDoubleAvailable.get(i)).getRoomID();
+            String sqlStatement = "INSERT INTO booking(roomID, clientID, bookingDateIn, bookingDateOut, status) VALUES(?, ?, ?, ?, ?)";
+            boolean insertSuccess = false;
+            try 
+            {
+                //InputStream eventImage = part.getInputStream();
+                PreparedStatement preparedStatementInsert = con.prepareStatement(sqlStatement);
+
+
+                preparedStatementInsert.setInt(1, roomID);
+                preparedStatementInsert.setInt(2, clientID);
+                preparedStatementInsert.setString(3, traveldateIn);
+                preparedStatementInsert.setString(4, traveldateOut);
+                preparedStatementInsert.setString(5, "Booked");
+                
+                // execute insert SQL stetement
+                preparedStatementInsert.executeUpdate();
+                preparedStatementInsert.close();
+
+                if (preparedStatementInsert != null)
+                {
+                    //insertSuccess = true;
+                    try(PrintWriter out = response.getWriter()){
+                        out.println("<script>");
+                        out.println("  alert('Register Success');");
+                        out.println("</script>");
+                        
+                     }  
+                } 
+                else
+                {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("NOSUCCESS!");
+                    } 
+                    String message = "Data added unsuccessful";
+                    session.setAttribute("alertMsg", message);
+                }
+            }
+            catch(SQLException ex) {
+                System.out.println(ex.getMessage());
+            }  
+        }
+        else if(roomType.equals("Triple"))
+        {
+            roomID=((Room)roomTripleAvailable.get(i)).getRoomID();
+            String sqlStatement = "INSERT INTO booking(roomID, clientID, bookingDateIn, bookingDateOut, status) VALUES(?, ?, ?, ?, ?)";
+            boolean insertSuccess = false;
+            try 
+            {
+                //InputStream eventImage = part.getInputStream();
+                PreparedStatement preparedStatementInsert = con.prepareStatement(sqlStatement);
+
+
+                preparedStatementInsert.setInt(1, roomID);
+                preparedStatementInsert.setInt(2, clientID);
+                preparedStatementInsert.setString(3, traveldateIn);
+                preparedStatementInsert.setString(4, traveldateOut);
+                preparedStatementInsert.setString(5, "Booked");
+                
+                // execute insert SQL stetement
+                preparedStatementInsert.executeUpdate();
+                preparedStatementInsert.close();
+
+                if (preparedStatementInsert != null)
+                {
+                    //insertSuccess = true;
+                    try(PrintWriter out = response.getWriter()){
+                        out.println("<script>");
+                        out.println("  alert('Register Success');");
+                        out.println("</script>");
+                        
+                     }  
+                } 
+                else
+                {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("NOSUCCESS!");
+                    } 
+                    String message = "Data added unsuccessful";
+                    session.setAttribute("alertMsg", message);
+                }
+            }
+            catch(SQLException ex) {
+                System.out.println(ex.getMessage());
+            }  
+        }
+        else if(roomType.equals("Quad"))
+        {
+            roomID=((Room)roomQuadAvailable.get(i)).getRoomID();
+            String sqlStatement = "INSERT INTO booking(roomID, clientID, bookingDateIn, bookingDateOut, status) VALUES(?, ?, ?, ?, ?)";
+            boolean insertSuccess = false;
+            try 
+            {
+                //InputStream eventImage = part.getInputStream();
+                PreparedStatement preparedStatementInsert = con.prepareStatement(sqlStatement);
+
+
+                preparedStatementInsert.setInt(1, roomID);
+                preparedStatementInsert.setInt(2, clientID);
+                preparedStatementInsert.setString(3, traveldateIn);
+                preparedStatementInsert.setString(4, traveldateOut);
+                preparedStatementInsert.setString(5, "Booked");
+                
+                // execute insert SQL stetement
+                preparedStatementInsert.executeUpdate();
+                preparedStatementInsert.close();
+
+                if (preparedStatementInsert != null)
+                {
+                    //insertSuccess = true;
+                    try(PrintWriter out = response.getWriter()){
+                        out.println("<script>");
+                        out.println("  alert('Register Success');");
+                        out.println("</script>");
+                        
+                     }  
+                } 
+                else
+                {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("NOSUCCESS!");
+                    } 
+                    String message = "Data added unsuccessful";
+                    session.setAttribute("alertMsg", message);
+                }
+            }
+            catch(SQLException ex) {
+                System.out.println(ex.getMessage());
+            }  
+        }      
+    }
+    public static long betweenDates(Date firstDate, Date secondDate) throws IOException
+    {
+        long difference_In_Time  = secondDate.getTime() - firstDate.getTime(); 
+        long difference_In_Days  = (difference_In_Time / (1000 * 60 * 60 * 24)) % 365; 
+        //return ChronoUnit.DAYS.between(firstDate.toInstant(), secondDate.toInstant());
+        return difference_In_Days;
+    }
+    public void displayBookInfo(String roomType,String traveldateIn, String traveldateOut,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        int i=0;
+        HttpSession session = request.getSession();
+        ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
+        ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
+        ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
+        ArrayList<Room> roomQuadAvailable = (ArrayList<Room>)session.getAttribute("roomQuadAvailable");
+        
+        
+        Date sqltraveldateIn=Date.valueOf(traveldateIn);
+        Date sqltraveldateOut=Date.valueOf(traveldateOut);
+        long datediff=betweenDates(sqltraveldateIn,sqltraveldateOut);
+        double totalPrice=0;
+        double pricepernight=0;
+        byte roomImage[]=((Room)roomSingleAvailable.get(i)).getRoomImage();
+        if(roomType.equals("Single"))
+        {
+            pricepernight=((Room)roomSingleAvailable.get(i)).getRoomPrice();
+            totalPrice=pricepernight*datediff;
+            roomImage =((Room)roomSingleAvailable.get(i)).getRoomImage();
+        }
+        else if(roomType.equals("Double"))
+        {
+            pricepernight=((Room)roomDoubleAvailable.get(i)).getRoomPrice();
+            totalPrice=pricepernight*datediff;
+            roomImage =((Room)roomDoubleAvailable.get(i)).getRoomImage();
+        }
+        else if(roomType.equals("Triple"))
+        {
+            pricepernight=((Room)roomTripleAvailable.get(i)).getRoomPrice();
+            totalPrice=pricepernight*datediff;
+            roomImage =((Room)roomTripleAvailable.get(i)).getRoomImage();
+        }
+        else if(roomType.equals("Quad"))
+        {
+            pricepernight=((Room)roomQuadAvailable.get(i)).getRoomPrice();
+            totalPrice=pricepernight*datediff;
+            roomImage =((Room)roomQuadAvailable.get(i)).getRoomImage();
+        }
+                
+        session.setAttribute("roomImage", roomImage);        
+        session.setAttribute("pricepernight", pricepernight);
+        session.setAttribute("totalPrice", totalPrice);
+        session.setAttribute("roomType", roomType);
+        session.setAttribute("traveldateIn", traveldateIn);
+        session.setAttribute("traveldateOut", traveldateOut);
+        session.setAttribute("datediff", datediff);
+    }
+    
 }

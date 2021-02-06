@@ -96,6 +96,8 @@
             int i=0;
             Room room = new Room();
             int guest_adult=(Integer)session.getAttribute("guest_adult");
+            String traveldateIn=(String)session.getAttribute("traveldateIn");
+            String traveldateOut=(String)session.getAttribute("traveldateOut");
             ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
             ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
             ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
@@ -115,7 +117,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">Single Room</h5>
                                 <p class="card-text">RM<%=((Room)roomSingleAvailable.get(i)).getRoomPrice()%>/night</p>
-                                <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="chooseRoomType" />
+                                <form  name="Book Room" action="${pageContext.request.contextPath}/ManageBookingController" method="post">
+                                    <input type="hidden" name="traveldateIn" value=<%=traveldateIn %> >
+                                    <input type="hidden" name="traveldateOut" value=<%=traveldateOut%> >
+                                    <input type="hidden" name="roomType" value=<%=((Room)roomSingleAvailable.get(i)).getRoomType() %> >
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="Book Room" />
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -131,7 +138,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">Double Room</h5>
                                 <p class="card-text">RM<%=((Room)roomDoubleAvailable.get(i)).getRoomPrice()%>/night</p>
-                                <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="chooseRoomType" />
+                                <form  name="Book Room" action="${pageContext.request.contextPath}/ManageBookingController" method="post">
+                                    <input type="hidden" name="traveldateIn" value=<%=traveldateIn %> >
+                                    <input type="hidden" name="traveldateOut" value=<%=traveldateOut%> >
+                                    <input type="hidden" name="roomType" value=<%=((Room)roomDoubleAvailable.get(i)).getRoomType() %> >
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="Book Room" />
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -147,7 +159,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">Triple Room</h5>
                                 <p class="card-text">RM<%=((Room)roomTripleAvailable.get(i)).getRoomPrice()%>/night</p>
-                                <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="chooseRoomType" />
+                                <form  name="Book Room" action="${pageContext.request.contextPath}/ManageBookingController" method="post">
+                                    <input type="hidden" name="traveldateIn" value=<%=traveldateIn %> >
+                                    <input type="hidden" name="traveldateOut" value=<%=traveldateOut%> >
+                                    <input type="hidden" name="roomType" value=<%=((Room)roomTripleAvailable.get(i)).getRoomType() %> >
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="Book Room" />
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -163,7 +180,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">Quad Room</h5>
                                 <p class="card-text">RM<%=((Room)roomQuadAvailable.get(i)).getRoomPrice()%>/night</p>
-                                <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="chooseRoomType" />
+                                <form  name="Book Room" action="${pageContext.request.contextPath}/ManageBookingController" method="post">
+                                    <input type="hidden" name="traveldateIn" value=<%=traveldateIn %> >
+                                    <input type="hidden" name="traveldateOut" value=<%=traveldateOut%> >
+                                    <input type="hidden" name="roomType" value=<%=((Room)roomQuadAvailable.get(i)).getRoomType() %> >
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" id="command" name="command" value="Book Room" />
+                                </form>
                             </div>
                         </div>
                     </div>

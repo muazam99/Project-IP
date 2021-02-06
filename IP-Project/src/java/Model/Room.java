@@ -5,20 +5,11 @@
  */
 package Model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import jdbc.JDBCutility;
-
 /**
  *
  * @author Muaz Amir
  */
 public class Room {
-   
-    private JDBCutility jdbcUtility;
-    private Connection con;
-    private String sqlStatement;
-    PreparedStatement preparedStatementInsert = null;
     private int roomID;
     private String roomNo;
     private String roomType;
