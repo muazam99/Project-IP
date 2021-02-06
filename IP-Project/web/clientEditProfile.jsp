@@ -108,12 +108,13 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th colspan="2"><img src="image/default.png"></th>
+                                    <th colspan="2"><img src="image/<jsp:getProperty name="user" property="picture"/>"></th>
                                 </tr>
                                 <tr>
                                     <td colspan="2">Upload new picture <br>
                                         <input type="file" name="file" size="60" ><br />
-                                        <input type="text" name="option" value="upload" hidden="hidden">
+                                        <input type="text" name="role" value="${CLIENT.getRole()}" hidden="hidden">
+                                        <input type="text" name="id" value="${CLIENT.getID()}" hidden="hidden">
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +126,7 @@
                                 <tr><td colspan="2">Role : <jsp:getProperty name="user" property="role"/></td></tr>
                             </thead>
                     
-                    <form action="ClientProfileController" method="POST">
+                    <form action="ProfileController" method="POST">
                             <tbody>
                                 <tr>
                                     <th>Name</th>
@@ -147,6 +148,8 @@
                                     <td colspan="2">
                                         
                                         <input type="text" name="option" value="edit" hidden="hidden">
+                                        <input type="text" name="role" value="${CLIENT.getRole()}" hidden="hidden">
+                                        <input type="text" name="id" value="${CLIENT.getID()}" hidden="hidden">
                                         <a href="clientProfile.jsp"><input type="button" value="Back"></a>
                                         <input type="submit" value="Submit">
                                     </td>

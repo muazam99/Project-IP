@@ -117,7 +117,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th colspan="2"><img id="profile" src="image/default.png"></th>
+                                <th colspan="2"><img id="profile" src="image/<jsp:getProperty name="user" property="picture"/>"></th>
                             </tr>
                             <tr><td colspan="2">Role : <jsp:getProperty name="user" property="role"/></td></tr>
                         </thead>

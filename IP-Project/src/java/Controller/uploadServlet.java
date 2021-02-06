@@ -124,6 +124,7 @@ public class uploadServlet extends HttpServlet {
         String fileName = "";   
         String extension = "";
         String id = "";
+        String role = "";
         try {
             // parses the request's content to extract file data
             @SuppressWarnings("unchecked")
@@ -149,65 +150,72 @@ public class uploadServlet extends HttpServlet {
                         
                     } else {
                         //process text form field
-                        String field = item.getFieldName();
+                        String idField = item.getFieldName();
+                        String roleField = item.getFieldName();
                         
-                        if (field.equals("id")) {
+                        if (idField.equals("id")) {
                             id = item.getString();
+                        }
+                        if(roleField.equals("role")){
+                            role = item.getString();
                         }
                     }
                 }
             }
             
             PreparedStatement ps = null;
-            
-            
-            String insert_profile = "UPDATE admin SET picture = ? WHERE adminID = "+ id;
-                try{
-                    
-                    ps = con.prepareStatement(insert_profile);
+            switch(role) {
+                case "ADMIN" : {
+                    String insert_profile = "UPDATE admin SET picture = ? WHERE adminID = "+ id;
+                    try{
 
-                    ps.setString(1,fileName);
+                        ps = con.prepareStatement(insert_profile);
 
-                    int insertStatus = 0;
-                    insertStatus = ps.executeUpdate();
-                    ps.close();
+                        ps.setString(1,fileName);
 
-                }catch(SQLException e){
+                        int insertStatus = 0;
+                        insertStatus = ps.executeUpdate();
+                        ps.close();
+
+                    }catch(SQLException e){
+                    }
+                    Admin admin = new Admin();
+                    admin.setPicture(fileName);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", admin);
+                break;
                 }
-                Admin admin = new Admin();
-                admin.setPicture(fileName);
-                HttpSession session = request.getSession();
-                session.setAttribute("user", admin);
+                case "CLIENT" : {
+                    String insert_profile = "UPDATE client SET picture = ? WHERE clientID = "+ id;
+                    try{
+
+                        ps = con.prepareStatement(insert_profile);
+
+                        ps.setString(1,fileName);
+
+                        int insertStatus = 0;
+                        insertStatus = ps.executeUpdate();
+                        ps.close();
+
+                    }catch(SQLException e){
+                    }
+                    Client client = new Client();
+                    client.setPicture(fileName);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", client);
+                    
+                    break;
+                }
+                case "default" : {
+                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                    break;
+                }
+            }
         } 
         catch (Exception ex) {
         }
-//        request.getRequestDispatcher("/adminEditProfile.jsp").forward(request, response);
-//        request.getRequestDispatcher("/AdminProfileController?option=view&id=id'").forward(request, response);
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet UploadServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet UploadServlet at " + request.getContextPath() + "</h1>");
-//            out.println("Full Name: " + id + "<br />");
-//            out.println(fileName + " uploaded succesfully!<br />");
-//            out.println("Extension: " + extension);
-//            out.println("<p><img src='image/" + fileName + "' width='100'/></p>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
         request.getRequestDispatcher("index.jsp").forward(request, response);
-//                try(PrintWriter out = response.getWriter()){
-//                      out.println("<script>");
-//                    out.println("  alert('Register Success');");
-////                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-////                    out.println("    window.location = '" + request.getContextPath() + "index.jsp");
-//                    out.println("</script>");
-//                 }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

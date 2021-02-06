@@ -48,8 +48,9 @@
                              <a class="nav-link" href="javascript:;">Manage Room</a>
                         </li>
                         <li>
-                            <form action="AdminProfileController" method="POST">
+                            <form action="ProfileController" method="POST">
                                 <input type="text" name="id" value="${ADMIN.getID()}" hidden="hidden">
+                                <input type="text" name="role" value="${ADMIN.getRole()}" hidden="hidden">
                                  <input type="text" name="option" value="view" hidden="hidden">
                                  <button type="submit">profile</button>
                             </form>
@@ -61,7 +62,9 @@
                              <a class="nav-link" href="javascript:;">View Room</a>
                         </li>
                         <li>
-                            <form action="ClientProfileController" method="POST">
+                            <form action="ProfileController" method="POST">
+                                <input type="text" name="id" value="${CLIENT.getID()}" hidden="hidden">
+                                <input type="text" name="role" value="${CLIENT.getRole()}" hidden="hidden">
                                  <input type="text" name="option" value="view" hidden="hidden">
                                  <button type="submit">profile</button>
                             </form>
