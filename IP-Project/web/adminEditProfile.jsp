@@ -113,6 +113,7 @@
                                 <tr>
                                     <td colspan="2">Upload new picture <br>
                                         <input type="file" name="file" size="60" ><br />
+                                        <input type="text" name="id" value="${ADMIN.getID()}" hidden="hidden">
                                         <input type="text" name="option" value="upload" hidden="hidden">
                                     </td>
                                 </tr>

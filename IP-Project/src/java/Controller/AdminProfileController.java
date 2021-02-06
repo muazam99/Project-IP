@@ -90,6 +90,7 @@ public class AdminProfileController extends HttpServlet {
                 editProfile(request , response);
                 break;
                 
+                
             default :
                 viewProfile(request , response);
                 break;
@@ -116,12 +117,14 @@ public class AdminProfileController extends HttpServlet {
                     String email = rs.getString("email");
                     String phone = rs.getString("phoneNo");
                     String role = rs.getString("role");
+                    String picture = rs.getString("picture");
                     
                     admin.setName(name);
                     admin.setPassword(password);
                     admin.setEmail(email);
                     admin.setPhoneNo(phone);
                     admin.setRole(role);
+                    admin.setPicture(picture);
 
                     session.setAttribute("user", admin);
                     status = "SUCCESS";

@@ -10,6 +10,8 @@ package Model;
  * @author Muaz Amir
  */
 public class Admin {
+
+    
     
     private String ID;    
     private String name;
@@ -17,7 +19,7 @@ public class Admin {
     private String role;
     private String phoneNo;
     private String password;
-    
+    private String picture;
 
     /**
      * @return the ID
@@ -103,6 +105,18 @@ public class Admin {
         this.password = password;
     }
     
+    /**
+     * @return the picture
+     */
+    public String getPicture() {
+        return picture;
+    }
 
+    /**
+     * @param picture the picture to set
+     */
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
     
 }

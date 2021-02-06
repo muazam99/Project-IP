@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Admin;
 import Model.Client;
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +84,9 @@ public class uploadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        String userID = request.getParameter("id");
 
         // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -143,22 +147,26 @@ public class uploadServlet extends HttpServlet {
  
                         // saves the file on disk
                         item.write(storeFile);
+                        Admin admin = new Admin();
+                        admin.setPicture(fileName);
+                        session.setAttribute("user", admin);
                         
                         Client c = new Client();
                         try{
                     
-                    String insert_profile = "INSERT INTO user (picture) VALUES (?) WHERE userID = 1";
-                    PreparedStatement ps = con.prepareStatement(insert_profile);
+                            String insert_profile = "UPDATE admin SET picture = ? WHERE adminID = 1";
+                            PreparedStatement ps = con.prepareStatement(insert_profile);
 
-                    ps.setString(1,fileName);
-                    
-                    int insertStatus = 0;
-                    insertStatus = ps.executeUpdate();
-                    
-                    
-                }catch(SQLException e){
-                
-                }
+                            ps.setString(1,fileName);
+
+                            int insertStatus = 0;
+                            insertStatus = ps.executeUpdate();
+                            ps.close();
+
+
+                        }catch(SQLException e){
+
+                        }
                     } else {
                         //process text form field
                         String field = item.getFieldName();
@@ -168,12 +176,27 @@ public class uploadServlet extends HttpServlet {
                         }
                     }
                 }
-                
             }
         } 
         catch (Exception ex) {
         }
-        
+        request.getRequestDispatcher("/adminEditProfile.jsp").forward(request, response);
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet UploadServlet</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet UploadServlet at " + request.getContextPath() + "</h1>");
+//            out.println("Full Name: " + fullname + "<br />");
+//            out.println(fileName + " uploaded succesfully!<br />");
+//            out.println("Extension: " + extension);
+//            out.println("<p><img src='image/" + fileName + "' width='100'/></p>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
         
     }
 
