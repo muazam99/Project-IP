@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -85,9 +86,7 @@ public class uploadServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session = request.getSession();
-        String userID = request.getParameter("id");
-
+        
         // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
             // if not, we stop here
@@ -124,7 +123,7 @@ public class uploadServlet extends HttpServlet {
 
         String fileName = "";   
         String extension = "";
-        String fullname = "";
+        String id = "";
         try {
             // parses the request's content to extract file data
             @SuppressWarnings("unchecked")
@@ -147,40 +146,43 @@ public class uploadServlet extends HttpServlet {
  
                         // saves the file on disk
                         item.write(storeFile);
-                        Admin admin = new Admin();
-                        admin.setPicture(fileName);
-                        session.setAttribute("user", admin);
                         
-                        Client c = new Client();
-                        try{
-                    
-                            String insert_profile = "UPDATE admin SET picture = ? WHERE adminID = 1";
-                            PreparedStatement ps = con.prepareStatement(insert_profile);
-
-                            ps.setString(1,fileName);
-
-                            int insertStatus = 0;
-                            insertStatus = ps.executeUpdate();
-                            ps.close();
-
-
-                        }catch(SQLException e){
-
-                        }
                     } else {
                         //process text form field
                         String field = item.getFieldName();
                         
-                        if (field.equals("fullname")) {
-                            fullname = item.getString();
+                        if (field.equals("id")) {
+                            id = item.getString();
                         }
                     }
                 }
             }
+            
+            PreparedStatement ps = null;
+            
+            
+            String insert_profile = "UPDATE admin SET picture = ? WHERE adminID = "+ id;
+                try{
+                    
+                    ps = con.prepareStatement(insert_profile);
+
+                    ps.setString(1,fileName);
+
+                    int insertStatus = 0;
+                    insertStatus = ps.executeUpdate();
+                    ps.close();
+
+                }catch(SQLException e){
+                }
+                Admin admin = new Admin();
+                admin.setPicture(fileName);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", admin);
         } 
         catch (Exception ex) {
         }
-        request.getRequestDispatcher("/adminEditProfile.jsp").forward(request, response);
+//        request.getRequestDispatcher("/adminEditProfile.jsp").forward(request, response);
+//        request.getRequestDispatcher("/AdminProfileController?option=view&id=id'").forward(request, response);
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
 //            out.println("<!DOCTYPE html>");
@@ -190,13 +192,21 @@ public class uploadServlet extends HttpServlet {
 //            out.println("</head>");
 //            out.println("<body>");
 //            out.println("<h1>Servlet UploadServlet at " + request.getContextPath() + "</h1>");
-//            out.println("Full Name: " + fullname + "<br />");
+//            out.println("Full Name: " + id + "<br />");
 //            out.println(fileName + " uploaded succesfully!<br />");
 //            out.println("Extension: " + extension);
 //            out.println("<p><img src='image/" + fileName + "' width='100'/></p>");
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+//                try(PrintWriter out = response.getWriter()){
+//                      out.println("<script>");
+//                    out.println("  alert('Register Success');");
+////                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+////                    out.println("    window.location = '" + request.getContextPath() + "index.jsp");
+//                    out.println("</script>");
+//                 }
         
     }
 
