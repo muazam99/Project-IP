@@ -40,7 +40,7 @@
                     <a class="nav-link" href="NavBarController">Home</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="javascript:;">About us</a>
+                    <a class="nav-link" href="NavBarController?command=About-Us">About us</a>
                   </li>
                   
                 

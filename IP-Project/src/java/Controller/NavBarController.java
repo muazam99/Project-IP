@@ -45,6 +45,10 @@ public class NavBarController extends HttpServlet {
                 case "Login-Page":
                     request.getRequestDispatcher("Login.jsp").forward(request, response);
                     break;
+                 
+                case "About-Us":
+                    request.getRequestDispatcher("AboutUs.jsp").forward(request, response);
+                    break;
                     
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
