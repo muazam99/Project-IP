@@ -250,6 +250,7 @@ public class ManageBookingController extends HttpServlet {
             System.out.println(ex.getMessage());
         } 
     }
+    
     public void searchAvailableRooms(int guest_adult,String traveldateIn, String traveldateOut,HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, ParseException{
         
@@ -415,6 +416,7 @@ public class ManageBookingController extends HttpServlet {
         }
         
     }
+    
     public void assignRoom(String roomType,String traveldateIn,String traveldateOut,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String sessionStatus = "";
         HttpSession session = request.getSession();
@@ -587,6 +589,7 @@ public class ManageBookingController extends HttpServlet {
             }  
         }      
     }
+    
     public static long betweenDates(Date firstDate, Date secondDate) throws IOException
     {
         long difference_In_Time  = secondDate.getTime() - firstDate.getTime(); 
@@ -594,6 +597,7 @@ public class ManageBookingController extends HttpServlet {
         //return ChronoUnit.DAYS.between(firstDate.toInstant(), secondDate.toInstant());
         return difference_In_Days;
     }
+    
     public void displayBookInfo(String roomType,String traveldateIn, String traveldateOut,HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         int i=0;

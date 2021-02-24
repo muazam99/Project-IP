@@ -42,8 +42,8 @@ public class ClientController extends HttpServlet {
                     break;
                 
                 case "My-Booking-Page" :
-                   
-                    break;
+                   request.getRequestDispatcher("viewMyBooking.jsp").forward(request, response);
+                   break;
                 
                 case "View-Room-Page" :
                         
