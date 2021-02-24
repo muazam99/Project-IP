@@ -107,7 +107,9 @@
         <c:choose>
             
             <c:when test="${CLIENT != null}">
-                     
+            <%
+                        Client client = (Client)session.getAttribute("CLIENT");
+            %>         
                  
                           <div class="container pb-5">
                               <div class="row align-items-start justify-content-center"><h1>Welcome ${CLIENT.getName()}</h1></div>
@@ -128,7 +130,12 @@
                                           <div class="card-body">
                                               <h5 class="card-title">My Booking</h5>
                                               <p class="card-text">See if you have any upcoming booking</p>
-                                              <a href="ClientController?command=My-Booking-Page" class="btn btn-primary stretched-link">View My Booking</a>
+                                                <form  name="viewMyBooking" method="post" action="${pageContext.request.contextPath}/ClientController" enctype="multipart/form-data">
+                                                    <div class="d-grid gap-2 mx-auto pt-1" style="width:250px;display: block;margin-left: auto;margin-right: auto;">   
+                                                        <input class=" btn btn-primary" type="submit" style="width:45%" id="command" name="command" value="My-Booking-Page">                                            
+                                                    </div>
+                                                    <input type="hidden" name="clientID" value=<%=client.getID()%> >                                                
+                                                </form>                                                                                              
                                           </div>
                                       </div>
                                   </div>
