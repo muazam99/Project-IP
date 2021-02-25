@@ -129,14 +129,14 @@
                                           <img src="image/cover.png" class="card-img-top" alt="...">
                                           <div class="card-body">
                                               <h5 class="card-title">My Booking</h5>
-                                              <p class="card-text">See if you have any upcoming booking</p>
-                                                <form  name="viewMyBooking" method="post" action="${pageContext.request.contextPath}/ClientController" enctype="multipart/form-data">
-                                                    <div class="d-grid gap-2 mx-auto pt-1" style="width:250px;display: block;margin-left: auto;margin-right: auto;">   
-                                                        <input class=" btn btn-primary " type="submit" style="width:45%" id="command" name="command" value="My-Booking">                                            
-                                                    </div>
-                                                    <input type="hidden" name="clientID" value=<%=client.getID()%> >                                                
-                                                </form>                                                                                              
-                                          </div>
+                                                <p class="card-text">See if you have any upcoming booking</p>
+                                                  <form  name="viewMyBooking" method="post" action="${pageContext.request.contextPath}/ClientController" >
+                                                      <div class="d-grid gap-2 mx-auto pt-1">   
+                                                          <input class=" btn btn-primary " type="submit" style="width:45%" id="command" name="command" value="My-Booking">                                            
+                                                      </div>
+                                                      <input type="hidden" name="clientID" value=<%=client.getID()%> >                                                
+                                                  </form>                                                                                              
+                                             </div>
                                       </div>
                                   </div>
                                   <div class="col">
