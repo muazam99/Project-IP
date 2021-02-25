@@ -132,7 +132,7 @@
                                               <p class="card-text">See if you have any upcoming booking</p>
                                                 <form  name="viewMyBooking" method="post" action="${pageContext.request.contextPath}/ClientController" enctype="multipart/form-data">
                                                     <div class="d-grid gap-2 mx-auto pt-1" style="width:250px;display: block;margin-left: auto;margin-right: auto;">   
-                                                        <input class=" btn btn-primary" type="submit" style="width:45%" id="command" name="command" value="My-Booking-Page">                                            
+                                                        <input class=" btn btn-primary " type="submit" style="width:45%" id="command" name="command" value="My-Booking">                                            
                                                     </div>
                                                     <input type="hidden" name="clientID" value=<%=client.getID()%> >                                                
                                                 </form>                                                                                              

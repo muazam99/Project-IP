@@ -26,6 +26,14 @@ public class Booking extends HttpServlet {
     public Booking() {
     }
 
+    public Booking(int bookingID, int roomID, String bookingDateIn, String bookingDateOut, String status){
+        this.bookingID = bookingID;
+        this.roomID = roomID;        
+        this.bookingDateIn = bookingDateIn;
+        this.bookingDateOut = bookingDateOut;
+        this.status = status;
+    }
+    
     public Booking(int bookingID, int roomID, int clientID, String bookingDateIn, String bookingDateOut, String status) {
         this.bookingID = bookingID;
         this.roomID = roomID;
