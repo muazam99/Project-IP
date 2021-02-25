@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <jsp:include page="headerNav.jsp" /> 
+         <  <jsp:include page="headerNav.jsp" /> 
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
@@ -87,13 +87,10 @@
       <script src="https://kit.fontawesome.com/4962701fb8.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
    
-   </head>
-        <%
+    </head>
+     <%
             int i=0;
             Room room = new Room();
-            
-            String traveldateIn=(String)session.getAttribute("traveldateIn");
-            String traveldateOut=(String)session.getAttribute("traveldateOut");
             ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
             ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
             ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
@@ -102,7 +99,7 @@
         <div class="container pb-5">
             <div class="row align-items-start justify-content-center"><h1>Welcome ${CLIENT.getName()}</h1></div>
             <div class="row align-items-center pt-4">
-                <%if(!roomSingleAvailable.isEmpty()){%>
+               
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
                             <%
@@ -112,60 +109,51 @@
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Single Room</h5>
-                                <p class="card-text">RM<%=((Room)roomSingleAvailable.get(i)).getRoomPrice()%>/night</p>
+                                <p class="card-text">RM20.00/night</p>
                                 
                             </div>
                         </div>
                     </div>
-                <%}%>
-                <%if(!roomDoubleAvailable.isEmpty()){%>
+              
+                
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                            <%
-                                byte roomImage[] =((Room)roomDoubleAvailable.get(i)).getRoomImage();
-                                String imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
-                            %>
+                            
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Double Room</h5>
-                                <p class="card-text">RM<%=((Room)roomDoubleAvailable.get(i)).getRoomPrice()%>/night</p>
+                                <p class="card-text">RM40.00/night</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+               
+               
+                    <div class="col">
+                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
+                           
+                            <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
+                            <div class="card-body">
+                                <h5 class="card-title">Triple Room</h5>
+                                <p class="card-text">RM60.00/night</p>
                                
                             </div>
                         </div>
                     </div>
-                <%}%>
-                <%if(!roomTripleAvailable.isEmpty()){%>
+               
+                
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                            <%
-                                byte roomImage[] =((Room)roomTripleAvailable.get(i)).getRoomImage();
-                                String imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
-                            %>
-                            <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
-                            <div class="card-body">
-                                <h5 class="card-title">Triple Room</h5>
-                                <p class="card-text">RM<%=((Room)roomTripleAvailable.get(i)).getRoomPrice()%>/night</p>
-                                
-                            </div>
-                        </div>
-                    </div>
-                <%}%>
-                <%if(!roomQuadAvailable.isEmpty()){%>
-                    <div class="col">
-                        <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                            <%
-                                byte roomImage[] =((Room)roomQuadAvailable.get(i)).getRoomImage();
-                                String imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
-                            %>
+                            
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Quad Room</h5>
-                                <p class="card-text">RM<%=((Room)roomQuadAvailable.get(i)).getRoomPrice()%>/night</p>
-                                
+                                <p class="card-text">RM80.00/night</p>
+                               
                             </div>
                         </div>
                     </div>
-                <%}%>
+                
 
 
             </div>
