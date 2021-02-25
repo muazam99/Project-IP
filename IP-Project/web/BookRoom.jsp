@@ -39,6 +39,7 @@
                                                 <div class="offset-md-2">
                                                    <table>
                                                         <tr>
+                                                      
                                                             <th>
                                                                 <label for="exampleInputEmail1" class="form-label">Check in</label>
                                                             </th>
