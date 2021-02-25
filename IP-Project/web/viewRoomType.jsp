@@ -91,10 +91,10 @@
      <%
             int i=0;
             Room room = new Room();
-            ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomSingleAvailable");
-            ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomDoubleAvailable");
-            ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomTripleAvailable");
-            ArrayList<Room> roomQuadAvailable = (ArrayList<Room>)session.getAttribute("roomQuadAvailable");
+            ArrayList<Room> roomSingleAvailable = (ArrayList<Room>)session.getAttribute("roomlistSingle");
+            ArrayList<Room> roomDoubleAvailable = (ArrayList<Room>)session.getAttribute("roomlistDouble");
+            ArrayList<Room> roomTripleAvailable = (ArrayList<Room>)session.getAttribute("roomlistTriple");
+            ArrayList<Room> roomQuadAvailable = (ArrayList<Room>)session.getAttribute("roomlistQuad");
         %>
         <div class="container pb-5">
             <div class="row align-items-start justify-content-center"><h1>Welcome ${CLIENT.getName()}</h1></div>
@@ -118,7 +118,10 @@
                 
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                            
+                            <%
+                                roomImage =((Room)roomDoubleAvailable.get(i)).getRoomImage();
+                                imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
+                            %>
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Double Room</h5>
@@ -131,7 +134,10 @@
                
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                           
+                            <%
+                                roomImage =((Room)roomTripleAvailable.get(i)).getRoomImage();
+                                imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
+                            %>
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Triple Room</h5>
@@ -144,7 +150,10 @@
                 
                     <div class="col">
                         <div class="card p-3 mb-2 bg-light text-dark" style="width: 18rem;">
-                            
+                             <%
+                                roomImage =((Room) roomQuadAvailable.get(i)).getRoomImage();
+                                imgDataBase64=new String(Base64.getEncoder().encode(roomImage));
+                            %>
                             <img src="data:image/gif;base64,<%= imgDataBase64 %>" class="card-img-top" alt="..."/>
                             <div class="card-body">
                                 <h5 class="card-title">Quad Room</h5>

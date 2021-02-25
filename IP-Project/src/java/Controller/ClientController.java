@@ -6,12 +6,16 @@
 package Controller;
 
 import Model.Booking;
+import Model.Room;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,6 +81,7 @@ public class ClientController extends HttpServlet {
                     break;
                                 
                 case "View-Room-Page" :
+                    searchAllRoom( request, response);
                    request.getRequestDispatcher("viewRoomType.jsp").forward(request, response);
                     break;
                     
@@ -175,4 +180,90 @@ public class ClientController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+     public void searchAllRoom(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException{
+        
+        
+        String driver = "com.mysql.jdbc.Driver";
+        String dbName = "faiqhoteldb";
+        String url = "jdbc:mysql://localhost/" + dbName + "?";
+        String userName = "root";
+        String password = "";
+        
+        jdbcUtility = new JDBCutility(driver,
+                                        url,
+                                        userName,
+                                        password);
+
+        jdbcUtility.jdbcConnect();
+        con = jdbcUtility.jdbcGetConnection();
+        String sqlStatement;
+        PreparedStatement preparedStatementInsert;
+        sqlStatement ="SELECT * FROM room";
+        int roomID;
+        String roomNo;
+        String roomType;
+        byte[] roomImage;
+        double roomPrice;
+        HttpSession session = request.getSession();            
+        //Room room = new Room();
+        ArrayList<Room> roomlistSingle = new ArrayList<Room>();
+        ArrayList<Room> roomlistDouble = new ArrayList<Room>();
+        ArrayList<Room> roomlistTriple = new ArrayList<Room>();
+        ArrayList<Room> roomlistQuad = new ArrayList<Room>();
+        
+        try 
+        {               
+            preparedStatementInsert  = con.prepareStatement(sqlStatement);
+
+            ResultSet rs = preparedStatementInsert.executeQuery();
+
+
+            while(rs.next())
+            {
+
+                    roomID = rs.getInt("roomID");
+                    roomNo = rs.getString("roomNo");
+                    roomType = rs.getString("roomType");
+                    Blob blob = rs.getBlob("roomImage");
+                    roomImage = blob.getBytes(1, (int) blob.length());
+                    roomPrice = rs.getDouble("roomPrice");
+                    if(roomType.equals("Single"))
+                    {
+                        roomlistSingle.add(new Room(roomID,roomNo,roomType,roomImage,roomPrice));
+                    }
+                    else if(roomType.equals("Double"))
+                    {
+                        roomlistDouble.add(new Room(roomID,roomNo,roomType,roomImage,roomPrice));
+                    }
+                    else if(roomType.equals("Triple"))
+                    {
+                        roomlistTriple.add(new Room(roomID,roomNo,roomType,roomImage,roomPrice));
+                    }
+                    else if(roomType.equals("Quad"))
+                    {
+                        roomlistQuad.add(new Room(roomID,roomNo,roomType,roomImage,roomPrice));
+                    }
+                    
+            }
+                    session.setAttribute("roomlistSingle", roomlistSingle);
+                    session.setAttribute("roomlistDouble", roomlistDouble);
+                    session.setAttribute("roomlistTriple", roomlistTriple);
+                    session.setAttribute("roomlistQuad", roomlistQuad);
+                    preparedStatementInsert.close();
+                   
+        }
+        catch(SQLException ex) {
+            System.out.println(ex.getMessage());
+        } 
+        catch (NullPointerException e) {
+            try (PrintWriter out = response.getWriter()) {
+                out.println("SUCCESS!");
+            } 
+        }
+        
+        
+    }
+    
 }
