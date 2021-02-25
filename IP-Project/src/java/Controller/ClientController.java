@@ -77,8 +77,9 @@ public class ClientController extends HttpServlet {
                     break;
                                 
                 case "View-Room-Page" :
-                        
-                     break;
+                   request.getRequestDispatcher("viewRoomType.jsp").forward(request, response);
+                    break;
+                    
                     
                 default :
                    request.getRequestDispatcher("index.jsp").forward(request, response);
