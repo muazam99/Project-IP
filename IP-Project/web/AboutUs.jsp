@@ -93,7 +93,7 @@
                <img src="image/danial.jpg" class="card-img-top" alt="..." height="500" width="200">
                <div class="card-body">
                  <h5 class="card-title">Muhammad Danial Hakimi </h5>
-                 <p class="card-text">Presenter</p>
+                 <p class="card-text">Back End Programmer 2</p>
                </div>
  
              </div>
