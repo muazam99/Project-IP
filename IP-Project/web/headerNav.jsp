@@ -53,9 +53,7 @@
                       </c:when>
                         
                         <c:when test="${CLIENT  != null}">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="javascript:;">View Room</a>
-                               </li>
+       
                          </c:when>                   
                   </c:choose>
                   
