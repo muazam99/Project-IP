@@ -215,7 +215,11 @@
                                     </div>
                                     
                               </div>
-            
+                              <div class="row align-items-end">
+                                  <div class="d-grid gap-2 col-2 mx-auto pt-2">
+                                      <a class="btn btn-success btn-lg" href="MainStaffInterface.jsp" role="button">Main Menu</a>                                           
+                                  </div>
+                              </div>
                           </div>
                       </form>                                                  
 
